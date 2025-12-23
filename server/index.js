@@ -4,12 +4,12 @@ const cors = require('cors');
 const RunServer= require("./Database/Connection");
 const homepageRouter = require('./Routes/HomepageRoute'); // import router
 const ProductRoutes = require('./Routes/productRoutes');
-const categoryRoutes = require('./Routes/categoryRoutes');
+const categoryRoutes = require('./Routes/CategoryRoutes');
 const path = require("path");
-const addressRoutes = require("./Routes/addressRoutes");
-const ordersRoutes = require("./Routes/orders");
-const authRoutes = require("./Routes/auth");
-const userRoutes = require("./Routes/userRoutes");
+const addressRoutes = require("./Routes/AddressRoutes");
+const ordersRoutes = require("./Routes/Orders");
+const authRoutes = require("./Routes/Auth");
+const userRoutes = require("./Routes/UserRoutes");
 
 // const upload = require("./middleware/upload");
 

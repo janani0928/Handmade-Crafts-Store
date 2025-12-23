@@ -1,6 +1,6 @@
 const express = require("express");
 const upload = require("../middleware/upload");
-const Product = require("../Models/Product");
+const Product = require("../models/Product");
 const router = express.Router();
 const escapeRegex = require("../Utils/escapeRegex"); // ✅ only this line
 
