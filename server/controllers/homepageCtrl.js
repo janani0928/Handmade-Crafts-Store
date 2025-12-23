@@ -1,4 +1,4 @@
-const Craft = require('../models/HomepageModel');
+const Craft = require('../models/homepageModel');
 
 /**
  * Middleware to handle async errors
