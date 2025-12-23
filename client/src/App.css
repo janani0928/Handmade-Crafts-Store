@@ -91,3 +91,7 @@
     grid-template-columns: repeat(3, 1fr) !important;
   }
 }
+.pd-main-image:hover {
+  transform: scale(1.5); /* 150% zoom */
+  z-index: 10;
+}

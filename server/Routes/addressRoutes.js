@@ -34,4 +34,20 @@ router.get("/list", async (req, res) => {
   }
 });
 
+// routes/address.js
+router.put("/update/:id", async (req, res) => {
+  try {
+    const updatedAddress = await Address.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updatedAddress) return res.status(404).json({ success: false, message: "Address not found" });
+    res.json({ success: true, data: updatedAddress });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+});
+
+
 module.exports = router;

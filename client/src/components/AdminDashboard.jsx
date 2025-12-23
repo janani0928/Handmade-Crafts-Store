@@ -297,7 +297,6 @@ const AdminDashboard = () => {
           <input style={styles.input} name="name" value={formData.name} onChange={handleChange} placeholder="Product Name" required />
           <input style={styles.input} name="brand" value={formData.brand} onChange={handleChange} placeholder="Brand" />
           <input style={styles.input} name="price" type="number" value={formData.price} onChange={handleChange} placeholder="Price" />
-          <input style={styles.input} name="rating" type="number" value={formData.rating} onChange={handleChange} placeholder="Rating" />
           <textarea style={styles.input} name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
           <input style={styles.input} name="deliveryCharge" type="number" value={formData.deliveryCharge} onChange={handleChange} placeholder="Delivery Charge" />
           <input style={styles.input} name="discount" type="number" value={formData.discount} onChange={handleChange} placeholder="Discount (%)" />

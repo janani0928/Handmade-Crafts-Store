@@ -199,7 +199,7 @@ const OrderSummary = () => {
                       </div>
                       <div style={{ fontSize: 13, color: "#388e3c" }}>{deliveryText}</div>
                       <div>Qty: {item.quantity}</div>
-                      <div>Size: {item.selectedSize || "N/A"}</div>
+                      <div>Size: {item.selectedSize || "Free"}</div>
                       <button
                         style={{
                           marginTop: 5,

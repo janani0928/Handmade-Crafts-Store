@@ -188,6 +188,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
                     color: "#212529",
                     height: "36px",
                     overflow: "hidden",
+                    
                   }}
                 >
                   {product.name}
@@ -249,10 +250,10 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
                       borderRadius: 4,
                     }}
                   >
-                    {product.rating || 4.0} ★
+                    {product.rating || " "} ★
                   </span>
                   <span style={{ color: "#6c757d" }}>
-                    {product.reviews || 0} Reviews
+                    {product.reviews || " 0"} Reviews
                   </span>
                 </div>
               </div>

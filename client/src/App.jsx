@@ -10,22 +10,24 @@ import Homepage from "./pages/Homepage.jsx";
 import Collection from "./pages/Collections.jsx";
 import AdminDashboard from "./components/AdminDashboard.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
-import MainContent from "./pages/MainContent.jsx"; // import MainContent
+import MainContent from "./pages/MainContent.jsx"; 
 import DeliveryAddress from "./pages/DeliveryAddress.jsx";
 import PaymentPage from "./pages/PaymentPage.jsx";
 import OrderSummary from "./pages/OrderSummary";
 import AddAddress from "./pages/AddAddress.jsx";
 import SavedAddress from "./pages/SavedAddress.jsx";
-import ProductPage from "./pages/ProductPage.jsx"; // ✅ import
+import ProductPage from "./pages/ProductPage.jsx"; 
 import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders.jsx";
 import Login from "./components/SigninForm.jsx";
 import Register from "./components/SignupForm.jsx";
 import "./App.css";
-import { ToastContainer } from "react-toastify"; 
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
+import ProductSearch from "./components/ProductSearch.jsx";
+import Categoryicons from "./pages/Categoryicons.jsx";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -48,30 +50,28 @@ const App = () => {
       <div>
         <Navbar />
         <ToastContainer position="top-right" autoClose={3000} />
-        
+
 
         <Routes>
           {/* 🛍️ USER SIDE */}
           <Route path="/" element={<Homepage />} />
-            <Route
-          path="/products/:categoryId/:subcategoryId/:childId"
-          element={<ProductPage />}
-        />
+          <Route
+            path="/products/:categoryId/:subcategoryId/:childId"
+            element={<ProductPage />}
+          />
           <Route path="/collection" element={<Collection />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/success" element={<Success />} />
-
-<Route
-  path="/profile"
-  element={
-    <ProtectedRoute isAuthenticated={!!localStorage.getItem("token")}>
-      <ProfilePage />
-    </ProtectedRoute>
-  }
-/>
-
-
-          {/* Example: display products in a category page */}
+          <Route path="/search" element={<ProductSearch />} />
+          <Route path="/categoryicons" element={<Categoryicons />} />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute isAuthenticated={!!localStorage.getItem("token")}>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/category"
             element={
@@ -81,8 +81,6 @@ const App = () => {
               />
             }
           />
-
-          {/* 🔐 ADMIN SIDE */}
           <Route
             path="/admin/login"
             element={<AdminLogin onLogin={setIsAdmin} />}
@@ -99,7 +97,7 @@ const App = () => {
             }
           />
 
-<Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
 
           <Route
             path="/admin/addProduct"
@@ -109,17 +107,17 @@ const App = () => {
           />
 
           <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
-        <Route path="/delivery-address" element={<DeliveryAddress  />} /> {/* ✅ make sure this exists */}
-        <Route path="/order-summary" element={<OrderSummary />} />
-        <Route path="/payment" element={<PaymentPage />} />
-<Route path="/add-address" element={<AddAddress />} />
-   <Route path="/saved-address" element={<SavedAddress />} />
-<Route path="/order-success" element={<OrderSuccess />} />
-<Route path="/login" element={<Login />} />
-<Route path="/register" element={<Register />} />
-<Route path="/my-orders" element={<MyOrders />} />
+          <Route path="/delivery-address" element={<DeliveryAddress />} /> 
+          <Route path="/order-summary" element={<OrderSummary />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/add-address" element={<AddAddress />} />
+          <Route path="/saved-address" element={<SavedAddress />} />
+          <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/my-orders" element={<MyOrders />} />
 
-  
+
           {/* Optional fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

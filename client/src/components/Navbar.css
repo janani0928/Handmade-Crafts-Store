@@ -50,7 +50,10 @@ body {
   border-radius: 6px;
   padding: 8px 12px;
   min-width: 180px;
+
+  position: relative; /* 🔥 REQUIRED */
 }
+
 
 .search-box i {
   color: gray;
@@ -63,6 +66,28 @@ body {
   outline: none;
   width: 100%;
   font-size: 14px;
+}
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  margin-top: 6px;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+}
+
+.search-item {
+  padding: 10px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.search-item:hover {
+  background-color: #f1f3f6;
 }
 
 /* ================= RIGHT MENU ================= */
@@ -253,3 +278,5 @@ html, body {
 .hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+
+

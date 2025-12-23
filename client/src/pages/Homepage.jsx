@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 const Homepage = () => {
   const [email, setEmail] = useState("");
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [allProducts, setAllProducts] = useState([]);
-  const [currentProduct, setCurrentProduct] = useState(null); // For filtering "other products"
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   const navigate = useNavigate();
 
@@ -15,7 +15,10 @@ const Homepage = () => {
   useEffect(() => {
     fetch("http://localhost:5000/api/products")
       .then((res) => res.json())
-      .then((data) => setAllProducts(data))
+      .then((data) => {
+        setAllProducts(data);
+        setFilteredProducts(data); // Initially show all
+      })
       .catch((err) => console.error(err));
   }, []);
 
@@ -28,9 +31,9 @@ const Homepage = () => {
           ...cat,
           subcategories: Array.isArray(cat.subcategories)
             ? cat.subcategories.map((sub) => ({
-              ...sub,
-              children: Array.isArray(sub.children) ? sub.children : [],
-            }))
+                ...sub,
+                children: Array.isArray(sub.children) ? sub.children : [],
+              }))
             : [],
         }));
         setCategories(safeData);
@@ -38,13 +41,7 @@ const Homepage = () => {
       .catch(console.error);
   }, []);
 
-  // Clear products if no category selected
-  useEffect(() => {
-    if (!selectedCategory?.childId) {
-      setCurrentProduct(null);
-    }
-  }, [selectedCategory]);
-
+  // Handle subscription
   const handleSubscribe = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/subscribe", {
@@ -59,6 +56,15 @@ const Homepage = () => {
     }
   };
 
+  // Handle category click
+const handleCategoryClick = (cat) => {
+  // Navigate to Category page with categoryId and label
+  navigate(`/categoryicons?categoryLabel=${encodeURIComponent(cat.label)}&categoryId=${cat._id}`)
+};
+
+
+
+
   return (
     <div className="homepage">
       {/* NAVBAR WITH CATEGORY MENU */}
@@ -67,13 +73,11 @@ const Homepage = () => {
           {categories.map((cat) => (
             <div className="category-item" key={cat._id}>
               <span className="category-title">{cat.name}</span>
-
               {cat.subcategories.length > 0 && (
                 <div className="mega-menu">
                   {cat.subcategories.map((sub) => (
                     <div className="mega-column" key={sub._id}>
                       <h4>{sub.name}</h4>
-
                       {sub.children.map((child) => (
                         <p
                           key={child._id}
@@ -95,7 +99,6 @@ const Homepage = () => {
         </div>
       </div>
 
-
       {/* HERO SECTION */}
       <section className="hero">
         <div className="hero-text">
@@ -104,14 +107,11 @@ const Homepage = () => {
           <p>
             Up to <b>40% OFF</b> on handmade collections
           </p>
-          <button onClick={() => navigate("/collection")}>
-            Shop Now
-          </button>
+          <button onClick={() => navigate("/collection")}>Shop Now</button>
         </div>
-
         <div className="hero-image">
           <img
-            src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108"
+            src="/home decor.png"
             alt="Handmade crafts"
           />
         </div>
@@ -125,76 +125,98 @@ const Homepage = () => {
       </div>
 
       {/* CATEGORY ICON SECTION */}
-      <section className="category-icons">
-        {[
-          { img: "https://i.imgur.com/8Km9tLL.png", label: "Ethnic Wear" },
-          { img: "https://i.imgur.com/JqEuJ6t.png", label: "Western Dresses" },
-          { img: "https://i.imgur.com/0y8Ftya.png", label: "Menswear" },
-          { img: "https://i.imgur.com/NnQwQyY.png", label: "Footwear" },
-          { img: "https://i.imgur.com/3O1Q5eB.png", label: "Home Decor" },
-          { img: "https://i.imgur.com/mnX9qdp.png", label: "Beauty" },
-          { img: "https://i.imgur.com/3wP5M7H.png", label: "Accessories" },
-          { img: "https://i.imgur.com/9oM0LqR.png", label: "Grocery" },
-        ].map((cat, idx) => (
-          <div className="category-card" key={idx}>
-            <img src={cat.img} alt={cat.label} />
-            <p>{cat.label}</p>
-          </div>
-        ))}
-      </section>
+// Inside your Homepage category icons section
+<section className="category-icons">
+  {[
+    { img: "/toys.png", label: "Toys" },
+    { img: "/Womenwear.png", label: "Women Clothing" },
+    { img: "/Menswear.png", label: "Menswear" },
+    { img: "/footwear.jpeg", label: "Footwear" },
+    { img: "/home decor.png", label: "Home Decor" },
+    { img: "/Beauty.jpeg", label: "Beauty" },
+    { img: "/Accessories.png", label: "Accessories" },
+    { img: "https://i.imgur.com/9oM0LqR.png", label: "Grocery" },
+  ].map((cat) => (
+    <div
+      key={cat.label}
+      className="category-card"
+      style={{ cursor: "pointer" }}
+      onClick={() =>
+        navigate(
+          `/categoryicons?categoryLabel=${encodeURIComponent(cat.label)}`
+        )
+      }
+    >
+      <img src={cat.img || "/placeholder.png"} alt={cat.label} />
+      <p>{cat.label}</p>
+    </div>
+  ))}
+</section>
+
+
+
+
       <hr />
+      <br />
 
-      {/* ALL PRODUCTS SECTION */}
-      <div style={{ marginTop: 40 }}>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-          {allProducts
-            .filter((p) => p._id !== currentProduct?._id) // optional chaining to avoid null errors
-            .map((p) => (
-              <div
-                key={p._id}
-                className="product-card"
-                onClick={() => navigate(`/product/${p._id}`)}
-              >
-                {/* Discount Badge */}
-                {p.discount && (
-                  <span className="discount-badge">{p.discount}% off</span>
-                )}
+      {/* PRODUCTS SECTION */}
+      <div
+        className="products-section"
+        style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
+      >
+        {filteredProducts.map((p) => {
+          const deliveryChargeText =
+            p.deliveryCharge && p.deliveryCharge > 0
+              ? `₹${p.deliveryCharge} delivery`
+              : "Free Delivery";
 
-                <img
-                  src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
-                  alt={p.name}
-                  className="product-image"
-                />
-
-                <div className="product-info">
-                  <h4 className="product-title">{p.name}</h4>
-
-                  <div className="price-row">
-                    {p.originalPrice && (
-                      <span className="old-price">₹{p.originalPrice}</span>
-                    )}
-                    <span className="new-price">₹{p.price}</span>
-                    {p.discount && (
-                      <span className="discount-text">{p.discount}% off</span>
-                    )}
-                  </div>
-
-                  <p className="delivery-text">Free Delivery</p>
-
-                  <div className="rating-row">
-                    <span className="rating-badge">
-                      {p.rating || 5} ★
+          return (
+            <div
+              key={p._id}
+              className="product-card"
+              onClick={() => navigate(`/product/${p._id}`)}
+            >
+              {p.discount > 0 && (
+                <span className="discount-badge">{p.discount}% off</span>
+              )}
+              <img
+                src={`http://localhost:5000/uploads/${
+                  p.images?.[0] || p.image
+                }`}
+                alt={p.name}
+                className="product-image"
+                style={{
+                  width: "100%",
+                  maxWidth: 400,
+                  objectFit: "contain",
+                }}
+              />
+              <div className="product-info">
+                <h4 className="product-title">{p.name}</h4>
+                <div className="price-row">
+                  {p.originalPrice && (
+                    <span className="old-price">₹{p.originalPrice}</span>
+                  )}
+                  <span className="new-price">₹{p.price}</span>
+                  {p.discount > 0 && (
+                    <span style={{ color: "#198754", fontSize: "13px" }}>
+                      {p.discount}% off
                     </span>
-                    <span className="review-text">
-                      {p.reviewsCount || 0} Reviews
-                    </span>
-                  </div>
+                  )}
+                </div>
+                <p className="delivery-text">{deliveryChargeText}</p>
+                <div className="rating-row">
+                  <span className="rating-badge">{p.rating || " "} ★</span>
+                  <span className="review-text">
+                    {p.reviewsCount || 0} Reviews
+                  </span>
                 </div>
               </div>
-
-            ))}
-        </div>
+            </div>
+          );
+        })}
       </div>
+
       <br />
       {/* PROMO ROW */}
       <section className="promo-row">

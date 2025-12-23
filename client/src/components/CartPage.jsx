@@ -154,7 +154,7 @@ const CartPage = () => {
                       {deliveryText}
                     </div>
                     <div style={{ fontSize: 13, marginTop: 4 }}>
-                      Size: {item.size || item.selectedSize || "N/A"}
+                      Size: {item.size || item.selectedSize || "Free"}
                     </div>
 
                     <div style={styles.actionsRow} className="actionsRow">

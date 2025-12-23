@@ -11,7 +11,7 @@
 
 /* CATEGORY BAR */
 .navbar-category-menu {
-  background-color: #8d2de21a;
+  background-color: #ead7bc2c;
   border-bottom: 1px solid #e0e0e0;
   position: relative;
   top: 0;
@@ -106,8 +106,9 @@
   justify-content: space-between;
   padding: 60px 80px;
   margin-top: 0;
-  background: linear-gradient(90deg, #8e2de2, #c471ed);
-  color: white;
+  background: linear-gradient(90deg, #e4c78d, #ead7bc,#f0dcbf);
+  color: #704803;
+  
 }
 
 .hero-text h1 {
@@ -122,11 +123,13 @@
 .hero-text button {
   margin-top: 20px;
   padding: 12px 28px;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: 700;
   border: none;
-  background: white;
-  color: #8e2de2;
+  background: #ff4081;
+  color: #e0e0e0;
   border-radius: 6px;
+  background-color: ff4081;
   cursor: pointer;
 }
 

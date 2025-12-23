@@ -2,6 +2,7 @@ const express = require("express");
 const upload = require("../middleware/upload");
 const Product = require("../Models/Product");
 const router = express.Router();
+const escapeRegex = require("../Utils/escapeRegex"); // ✅ only this line
 
 // ===============================
 // ADD PRODUCT
@@ -122,9 +123,114 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get all products
+// backend/routes/products.js
+router.get("/", async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.categoryId) {
+      filter.category = req.query.categoryId; // match category _id
+    }
+
+    const products = await Product.find(filter);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ===============================
 // GET ONE PRODUCT
 // ===============================
+router.get("/search", async (req, res) => {
+  try {
+    const q = req.query.q?.trim();
+    console.log("Search query:", q);
+
+    // Ignore empty or too short queries
+    if (!q || q.length < 2) return res.json([]);
+
+    // Safe regex
+    const regex = new RegExp(escapeRegex(q), "i");
+
+    const products = await Product.find({
+      $or: [
+        { name: { $regex: regex } },
+        { description: { $regex: regex } },
+        { brand: { $regex: regex } },
+      ],
+    })
+      .limit(50)
+      .populate("category", "name")
+      .populate("subcategory", "name")
+      .populate("childSubcategory", "name")
+      .lean();
+
+    res.json(products);
+  } catch (err) {
+    console.error("Search error full:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+// 🔍 SEARCH PRODUCTS
+router.get("/search", async (req, res) => {
+  try {
+    const q = req.query.q?.trim();
+    console.log("Search query:", q);
+
+    if (!q || q.length < 2) return res.json([]); // ignore empty or too short queries
+
+    const regex = new RegExp(escapeRegex(q), "i");
+
+    const products = await Product.find({
+      $or: [
+        { name: { $exists: true, $regex: regex } },
+        { description: { $exists: true, $regex: regex } },
+        { brand: { $exists: true, $regex: regex } },
+      ],
+    })
+      .limit(50)
+      .populate("category", "name")
+      .populate("subcategory", "name")
+      .populate("childSubcategory", "name")
+      .lean();
+
+    res.json(products);
+  } catch (err) {
+    console.error("Search error full:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+
+
+
+
+// routes/productRoutes.js
+router.get("/related", async (req, res) => {
+  try {
+    const categories = (req.query.categories || "").split(",").filter(Boolean);
+    const excludeIds = (req.query.exclude || "").split(",").filter(Boolean);
+
+    if (categories.length === 0) return res.json([]);
+
+    const related = await Product.find({
+      category: { $in: categories },
+      _id: { $nin: excludeIds },
+    }).limit(20); // limit for performance
+
+    res.json(related);
+  } catch (err) {
+    console.error("Related products error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+// GET single product by ID
 router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
@@ -132,38 +238,17 @@ router.get("/:id", async (req, res) => {
       .populate("subcategory", "name")
       .populate("childSubcategory", "name");
 
-    if (!product) {
-      return res.status(404).json({ error: "Product not found" });
-    }
+    if (!product) return res.status(404).json({ message: "Product not found" });
 
     res.json(product);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Product fetch error:", err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
 
-router.get("/search", async (req, res) => {
-  try {
-    const searchQuery = req.query.q;
 
-    if (!searchQuery) {
-      return res.json([]);
-    }
 
-    const products = await Product.find({
-      $or: [
-        { name: { $regex: searchQuery, $options: "i" } },
-        { brand: { $regex: searchQuery, $options: "i" } },
-        { category: { $regex: searchQuery, $options: "i" } },
-        { subcategory: { $regex: searchQuery, $options: "i" } },
-      ],
-    });
-
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Search error" });
-  }
-});
 
 module.exports = router;
