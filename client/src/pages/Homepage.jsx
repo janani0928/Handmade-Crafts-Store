@@ -199,7 +199,7 @@ const handleCategoryClick = (cat) => {
                   )}
                   <span className="new-price">₹{p.price}</span>
                   {p.discount > 0 && (
-                    <span style={{ color: "#198754", fontSize: "13px" }}>
+                    <span style={{ color: "#ff4081", fontSize: "13px" }}>
                       {p.discount}% off
                     </span>
                   )}

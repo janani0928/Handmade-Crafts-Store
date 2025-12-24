@@ -47,30 +47,75 @@ const Categoryicons = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>{categoryLabel} Products</h2>
+      <h2 style={{ color: "#198754", fontWeight: "800", marginBottom:25}}>{categoryLabel} Products:-</h2>
 
       {loading ? (
         <p>Loading products...</p>
       ) : products.length === 0 ? (
         <p>No products found in {categoryLabel}</p>
       ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 20 }}>
-          {products.map((product) => (
-            <div
-              key={product._id}
-              style={{ border: "1px solid #ccc", padding: 10, width: 200, cursor: "pointer" }}
-              onClick={() => navigate(`/product/${product._id}`)}
-            >
-              <img
-                src={`http://localhost:5000/uploads/${product.images?.[0] || product.image}`}
-                alt={product.name}
-                style={{ width: "100%", objectFit: "contain", height: 180 }}
-              />
-              <h4>{product.name}</h4>
-              <p>₹{product.price}</p>
-            </div>
-          ))}
+      <div
+  className="products-section"
+  style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
+>
+  {products.map((p) => {
+    const deliveryChargeText =
+      p.deliveryCharge && p.deliveryCharge > 0
+        ? `₹${p.deliveryCharge} delivery`
+        : "Free Delivery";
+
+    return (
+      <div
+        key={p._id}
+        className="product-card"
+        onClick={() => navigate(`/product/${p._id}`)}
+      >
+        {p.discount > 0 && (
+          <span  className="discount-badge">{p.discount}% off</span>
+        )}
+
+        <img
+          src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
+          alt={p.name}
+          className="product-image"
+          style={{
+            width: "100%",
+            maxWidth: 400,
+            objectFit: "contain",
+          }}
+        />
+
+        <div className="product-info">
+          <h4 className="product-title">{p.name}</h4>
+
+          <div className="price-row">
+            {p.originalPrice && (
+              <span className="old-price">₹{p.originalPrice}</span>
+            )}
+            <span className="new-price">₹{p.price}</span>
+            {p.discount > 0 && (
+              <span style={{ color: "#ff4081", fontSize: "13px" }}>
+                {p.discount}% off
+              </span>
+            )}
+          </div>
+
+          <p className="delivery-text">{deliveryChargeText}</p>
+
+          <div className="rating-row">
+            <span className="rating-badge">
+              {p.rating || " "} ★
+            </span>
+            <span className="review-text">
+              {p.reviewsCount || 0} Reviews
+            </span>
+          </div>
         </div>
+      </div>
+    );
+  })}
+</div>
+
       )}
     </div>
   );

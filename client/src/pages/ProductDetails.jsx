@@ -165,7 +165,7 @@ const ProductDetails = () => {
             <h2 style={styles.price}>
               ₹{finalPrice} <span style={styles.originalPrice}>{price}</span>
             </h2>
-            {discount > 0 && <p style={styles.discount}>You save ₹{discountAmount} ({discount}% OFF)</p>}
+            {discount > 0 && <p style={styles.discount}>You save ₹{discountAmount}<span style={{color:"#ff4081"}}> ({discount}% OFF)</span></p>}
             <p>⭐ {product.rating || 0} • {product.reviews || 0} Reviews</p>
           </div>
 
@@ -276,7 +276,7 @@ const ProductCard = ({ product, navigate }) => {
           {product.originalPrice && <span className="old-price">₹{product.originalPrice}</span>}
           <span className="new-price">₹{product.price}</span>
           {product.discount > 0 && (
-            <span style={{ color: "#198754", fontSize: "13px" }}>{product.discount}% off</span>
+            <span style={{ color: "#ff4081", fontSize: "13px" }}>{product.discount}% off</span>
           )}
         </div>
         <p className="delivery-text">{deliveryChargeText}</p>

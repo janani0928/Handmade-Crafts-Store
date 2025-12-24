@@ -335,7 +335,7 @@ const Payment = () => {
             </div>
             {totalSavings > 0 && (
               <p style={{ color: "green", marginTop: 8 }}>
-                You saved ₹{formatPrice(totalSavings)} on this order
+                You saved <span style={{ color: "#ff4081" }}>₹{formatPrice(totalSavings)}</span> on this order
               </p>
             )}
           </div>

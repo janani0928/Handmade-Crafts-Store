@@ -193,7 +193,7 @@ const OrderSummary = () => {
                         <span style={{ fontWeight: 600 }}>₹{formatPrice(discountedPrice)}</span>
                         {item.discount > 0 && (
                           <span style={{ fontSize: 13, color: "#878787", marginLeft: 8 }}>
-                            <s>₹{formatPrice(item.price)}</s> ({item.discount}% off)
+                            <s>₹{formatPrice(item.price)}</s><span style={{color:"#ff4081"}}>({item.discount}% off)</span> 
                           </span>
                         )}
                       </div>
