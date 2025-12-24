@@ -7,7 +7,7 @@ const categoryRoutes = require('./Routes/categoryRoutes');
 const path = require("path");
 const addressRoutes = require("./Routes/addressRoutes");
 const ordersRoutes = require("./Routes/ordersRoutes");
-const authRoutes = require("./Routes/authRoutes");
+const authRoutes = require("./Routes/RuthRoutes");
 const userRoutes = require("./Routes/userRoutes");
 
 
