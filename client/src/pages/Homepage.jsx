@@ -10,10 +10,10 @@ const Homepage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
 
   const navigate = useNavigate();
-
+const API = import.meta.env.VITE_API_URL; // Vite
   // Fetch all products
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API}/api/products`)
       .then((res) => res.json())
       .then((data) => {
         setAllProducts(data);
@@ -24,7 +24,7 @@ const Homepage = () => {
 
   // Fetch categories
   useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
+    fetch(`${API}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         const safeData = data.map((cat) => ({
@@ -44,7 +44,7 @@ const Homepage = () => {
   // Handle subscription
   const handleSubscribe = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/subscribe", {
+      const res = await fetch(`${API}/api/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -125,7 +125,7 @@ const handleCategoryClick = (cat) => {
       </div>
 
       {/* CATEGORY ICON SECTION */}
-// Inside your Homepage category icons section
+
 <section className="category-icons">
   {[
     { img: "/toys.png", label: "Toys" },
@@ -180,7 +180,7 @@ const handleCategoryClick = (cat) => {
                 <span className="discount-badge">{p.discount}% off</span>
               )}
               <img
-                src={`http://localhost:5000/uploads/${
+                src={`${API}/uploads/${
                   p.images?.[0] || p.image
                 }`}
                 alt={p.name}

@@ -22,7 +22,6 @@ const Categoryicons = () => {
       try {
         const res = await axios.get("http://localhost:5000/api/products");
 
-        // Filter products by category name or subcategory name
         const filtered = res.data.filter((p) => {
           const catName = p.category?.name || p.category || "";
           const subCatName = p.subcategory || p.type || "";

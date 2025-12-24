@@ -16,7 +16,10 @@ const userRoutes = require("./Routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://handmade-crafts-store-1.onrender.com"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve image files
