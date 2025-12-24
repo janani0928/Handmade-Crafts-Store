@@ -17,9 +17,13 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: ["http://localhost:5173", "https://handmade-crafts-store-1.onrender.com"],
+  origin: [
+    "http://localhost:5173",
+    "https://handmade-crafts-store.onrender.com"
+  ],
   credentials: true
 }));
+
 app.use(express.json());
 
 // Serve image files
