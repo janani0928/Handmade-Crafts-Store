@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const RunServer= require("./Database/Connection");
-const homepageRouter = require('./Routes/HomepageRoute'); // import router
 const ProductRoutes = require('./Routes/productRoutes');
 const categoryRoutes = require('./Routes/CategoryRoutes');
 const path = require("path");
@@ -30,12 +29,8 @@ app.use("/api/address", addressRoutes);
 app.use("/api/orders", OrdersRoutes);
 app.use('/api/auth', AuthRoutes);
 // Mount homepage routes at /api
-app.use('/api', homepageRouter);
 
 app.use("/api/users", userRoutes);
-
-
-
 
 
 RunServer();
