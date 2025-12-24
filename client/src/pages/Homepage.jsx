@@ -11,36 +11,59 @@ const Homepage = () => {
 
   const navigate = useNavigate();
 const API = import.meta.env.VITE_API_URL;
-fetch(`${API}/api/products`)
+
   // Fetch all products
-  useEffect(() => {
-    fetch(`${API}/api/products`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAllProducts(data);
-        setFilteredProducts(data); // Initially show all
-      })
-      .catch((err) => console.error(err));
-  }, []);
+useEffect(() => {
+  fetch(`${API}/api/products`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Products API not found");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      setAllProducts(data);
+      setFilteredProducts(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      setAllProducts([]);
+      setFilteredProducts([]);
+    });
+}, [API]);
+
 
   // Fetch categories
-  useEffect(() => {
-    fetch(`${API}/api/categories`)
-      .then((res) => res.json())
-      .then((data) => {
-        const safeData = data.map((cat) => ({
-          ...cat,
-          subcategories: Array.isArray(cat.subcategories)
-            ? cat.subcategories.map((sub) => ({
-                ...sub,
-                children: Array.isArray(sub.children) ? sub.children : [],
-              }))
-            : [],
-        }));
-        setCategories(safeData);
-      })
-      .catch(console.error);
-  }, []);
+useEffect(() => {
+  fetch(`${API}/api/categories`)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Categories API not found");
+      }
+      return res.json();
+    })
+    .then((data) => {
+      const safeData = Array.isArray(data)
+        ? data.map((cat) => ({
+            ...cat,
+            subcategories: Array.isArray(cat.subcategories)
+              ? cat.subcategories.map((sub) => ({
+                  ...sub,
+                  children: Array.isArray(sub.children)
+                    ? sub.children
+                    : [],
+                }))
+              : [],
+          }))
+        : [];
+      setCategories(safeData);
+    })
+    .catch((err) => {
+      console.error(err);
+      setCategories([]);
+    });
+}, [API]);
+
 
   // Handle subscription
   const handleSubscribe = async () => {

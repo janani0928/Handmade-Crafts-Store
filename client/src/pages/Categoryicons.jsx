@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-const API = import.meta.env.VITE_API_URL;
+
+// Automatically switch API URL based on environment
+const API =
+  import.meta.env.PROD
+    ? "https://handmade-crafts-store-1.onrender.com"
+    : "http://localhost:5000";
 
 const Categoryicons = () => {
   const location = useLocation();
@@ -22,7 +27,9 @@ const Categoryicons = () => {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${API}/api/products`);
+        if (!res.data) throw new Error("No data");
 
+        // Filter products by category or subcategory
         const filtered = res.data.filter((p) => {
           const catName = p.category?.name || p.category || "";
           const subCatName = p.subcategory || p.type || "";
@@ -47,75 +54,68 @@ const Categoryicons = () => {
 
   return (
     <div style={{ padding: 20 }}>
-      <h2 style={{ color: "#198754", fontWeight: "800", marginBottom:25}}>{categoryLabel} Products:-</h2>
+      <h2 style={{ color: "#198754", fontWeight: 800, marginBottom: 25 }}>
+        {categoryLabel} Products:
+      </h2>
 
       {loading ? (
         <p>Loading products...</p>
       ) : products.length === 0 ? (
         <p>No products found in {categoryLabel}</p>
       ) : (
-      <div
-  className="products-section"
-  style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
->
-  {products.map((p) => {
-    const deliveryChargeText =
-      p.deliveryCharge && p.deliveryCharge > 0
-        ? `₹${p.deliveryCharge} delivery`
-        : "Free Delivery";
+        <div
+          className="products-section"
+          style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
+        >
+          {products.map((p) => {
+            const deliveryChargeText =
+              p.deliveryCharge && p.deliveryCharge > 0
+                ? `₹${p.deliveryCharge} delivery`
+                : "Free Delivery";
 
-    return (
-      <div
-        key={p._id}
-        className="product-card"
-        onClick={() => navigate(`/product/${p._id}`)}
-      >
-        {p.discount > 0 && (
-          <span  className="discount-badge">{p.discount}% off</span>
-        )}
+            return (
+              <div
+                key={p._id}
+                className="product-card"
+                onClick={() => navigate(`/product/${p._id}`)}
+              >
+                {p.discount > 0 && (
+                  <span className="discount-badge">{p.discount}% off</span>
+                )}
 
-        <img
-          src={`${API}/uploads/${p.images?.[0] || p.image}`}
-          alt={p.name}
-          className="product-image"
-          style={{
-            width: "100%",
-            maxWidth: 400,
-            objectFit: "contain",
-          }}
-        />
+                <img
+                  src={`${API}/uploads/${p.images?.[0] || p.image}`}
+                  alt={p.name}
+                  className="product-image"
+                  style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}
+                />
 
-        <div className="product-info">
-          <h4 className="product-title">{p.name}</h4>
+                <div className="product-info">
+                  <h4 className="product-title">{p.name}</h4>
 
-          <div className="price-row">
-            {p.originalPrice && (
-              <span className="old-price">₹{p.originalPrice}</span>
-            )}
-            <span className="new-price">₹{p.price}</span>
-            {p.discount > 0 && (
-              <span style={{ color: "#ff4081", fontSize: "13px" }}>
-                {p.discount}% off
-              </span>
-            )}
-          </div>
+                  <div className="price-row">
+                    {p.originalPrice && (
+                      <span className="old-price">₹{p.originalPrice}</span>
+                    )}
+                    <span className="new-price">₹{p.price}</span>
+                    {p.discount > 0 && (
+                      <span style={{ color: "#ff4081", fontSize: "13px" }}>
+                        {p.discount}% off
+                      </span>
+                    )}
+                  </div>
 
-          <p className="delivery-text">{deliveryChargeText}</p>
+                  <p className="delivery-text">{deliveryChargeText}</p>
 
-          <div className="rating-row">
-            <span className="rating-badge">
-              {p.rating || " "} ★
-            </span>
-            <span className="review-text">
-              {p.reviewsCount || 0} Reviews
-            </span>
-          </div>
+                  <div className="rating-row">
+                    <span className="rating-badge">{p.rating || " "} ★</span>
+                    <span className="review-text">{p.reviewsCount || 0} Reviews</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
-    );
-  })}
-</div>
-
       )}
     </div>
   );
