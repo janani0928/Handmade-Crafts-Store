@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import MainContent from "./MainContent";        // ✅ import
 import ProductDetails from "./ProductDetails";
 import "./Homepage.css";
+const API = import.meta.env.VITE_API_URL;
 
 
 const ProductPage = () => {
@@ -17,7 +18,7 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
+          `${API}/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
         );
         const data = await res.json();
         setProducts(data);

@@ -10,7 +10,8 @@ const Homepage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
 
   const navigate = useNavigate();
-const API = import.meta.env.VITE_API_URL; // Vite
+const API = import.meta.env.VITE_API_URL;
+fetch(`${API}/api/products`)
   // Fetch all products
   useEffect(() => {
     fetch(`${API}/api/products`)

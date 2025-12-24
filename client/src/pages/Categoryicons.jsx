@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
 const Categoryicons = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const Categoryicons = () => {
 
     const fetchProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(`${API}/api/products`);
 
         const filtered = res.data.filter((p) => {
           const catName = p.category?.name || p.category || "";
@@ -74,7 +75,7 @@ const Categoryicons = () => {
         )}
 
         <img
-          src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
+          src={`${API}/uploads/${p.images?.[0] || p.image}`}
           alt={p.name}
           className="product-image"
           style={{

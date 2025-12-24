@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 
 /* ================= HELPERS ================= */
 const isValidUPI = (upi) =>
@@ -97,7 +98,7 @@ const Payment = () => {
     setLoading(true);
     const paymentStatus = method === "COD" ? "Pending" : "Paid";
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

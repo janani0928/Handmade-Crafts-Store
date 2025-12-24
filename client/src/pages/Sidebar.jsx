@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+const API = import.meta.env.VITE_API_URL;
 
 const Sidebar = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([]);
@@ -15,7 +16,7 @@ const Sidebar = ({ onCategorySelect }) => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
+    fetch(`${API}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         const safeData = data.map((cat) => ({

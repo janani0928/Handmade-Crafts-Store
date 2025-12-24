@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateQuantity, removeItem } from "../redux/cartSlice";
 import "../pages/Homepage.css";
+const API = import.meta.env.VITE_API_URL;
+
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -121,7 +123,7 @@ const CartPage = () => {
                   <img
                     src={
                       item.images && item.images.length > 0
-                        ? `http://localhost:5000/uploads/${item.images[0]}`
+                        ? `${API}/uploads/${item.images[0]}`
                         : "/placeholder.png"
                     }
                     alt={item.name}

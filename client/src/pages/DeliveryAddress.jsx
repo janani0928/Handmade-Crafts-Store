@@ -6,6 +6,7 @@ const DeliveryAddress = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const items = location.state?.items || [];
+const API = import.meta.env.VITE_API_URL;
 
   const totalAmount = items.reduce((sum, item) => {
     const price = Number(item.price || 0);
@@ -32,7 +33,7 @@ const DeliveryAddress = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/address/list")
+      .get(`${API}/api/address/list`)
       .then((res) => setAddressList(res.data.addresses))
       .catch((err) => console.log(err));
   }, []);

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import "../App.css";
 import { toast } from "react-toastify";
+const API = import.meta.env.VITE_API_URL;
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const ProductDetails = () => {
 
   // Fetch all products
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API}/api/products`)
       .then(res => res.json())
       .then(data => setAllProducts(data))
       .catch(err => console.error(err));
@@ -30,7 +31,7 @@ const ProductDetails = () => {
 
   // Fetch current product
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`${API}/api/products/${id}`)
       .then(res => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -91,7 +92,7 @@ const ProductDetails = () => {
               .map((img, i) => (
                 <img
                   key={i}
-                  src={`http://localhost:5000/uploads/${img}`}
+                  src={`${API}/uploads/${img}`}
                   alt=""
                   onClick={() => setMainImage(img)}
                   style={{
@@ -107,7 +108,7 @@ const ProductDetails = () => {
           <div style={styles.mainImageWrapper}>
             <div style={{ ...styles.mainImageWrapper, overflow: "hidden", position: "relative" }}>
               <img
-                src={`http://localhost:5000/uploads/${mainImage}`}
+                src={`${API}/uploads/${mainImage}`}
                 alt={product.name}
                 style={{
                   ...styles.mainImageZoom,
@@ -265,7 +266,7 @@ const ProductCard = ({ product, navigate }) => {
       onClick={() => navigate(`/product/${product._id}`)}
     >
       <img
-        src={`http://localhost:5000/uploads/${product.images?.[0] || product.image}`}
+        src={`${API}/uploads/${product.images?.[0] || product.image}`}
         alt={product.name}
         style={styles.productCardImage}
       />

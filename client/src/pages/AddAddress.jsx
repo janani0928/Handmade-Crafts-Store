@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const AddAddress = () => {
   const navigate = useNavigate();
   const location = useLocation();
+const API = import.meta.env.VITE_API_URL;
 
   // Check if we are in edit mode
   const editData = location.state?.address || null;
@@ -33,12 +34,12 @@ const AddAddress = () => {
       if (isEdit) {
         // Update existing address
         res = await axios.put(
-          `http://localhost:5000/api/address/update/${editData._id}`,
+          `${API}/api/address/update/${editData._id}`,
           form
         );
       } else {
         // Add new address
-        res = await axios.post("http://localhost:5000/api/address/add", form);
+        res = await axios.post(`${API}/api/address/add`, form);
       }
 
       if (res.data.success) {

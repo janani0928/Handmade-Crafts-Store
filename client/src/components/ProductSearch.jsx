@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+const API = import.meta.env.VITE_API_URL;
 
 const ProductSearch = () => {
   const [query, setQuery] = useState("");
@@ -17,7 +18,7 @@ const ProductSearch = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/api/products/search?q=${encodeURIComponent(
+          `${API}/api/products/search?q=${encodeURIComponent(
             query
           )}`
         );

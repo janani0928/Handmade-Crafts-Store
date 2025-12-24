@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const AddCategory = () => {
   const [name, setName] = useState("");
   const [subcategories, setSubcategories] = useState("");
+const API = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +21,7 @@ const AddCategory = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/categories", {
+      const res = await fetch(`${API}/api/categories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

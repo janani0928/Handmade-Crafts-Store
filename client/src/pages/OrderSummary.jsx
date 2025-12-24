@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 
 const OrderSummary = () => {
   const { state } = useLocation();
@@ -177,7 +178,7 @@ const OrderSummary = () => {
                     <img
                       src={
                         item.images && item.images.length > 0
-                          ? `http://localhost:5000/uploads/${item.images[0]}`
+                          ? `${API}/uploads/${item.images[0]}`
                           : "/placeholder.png"
                       }
                       alt={item.name}

@@ -28,6 +28,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import ProductSearch from "./components/ProductSearch.jsx";
 import Categoryicons from "./pages/Categoryicons.jsx";
+const API = import.meta.env.VITE_API_URL;
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -36,7 +37,7 @@ const App = () => {
 
   // Fetch products
   const loadProducts = async () => {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch(`${API}/api/products`);
     const data = await res.json();
     setProducts(data);
   };

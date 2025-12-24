@@ -6,6 +6,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!selectedCategory || !selectedCategory.childId) {
@@ -25,7 +26,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
         params.append("childId", selectedCategory.childId);
 
         const res = await fetch(
-          `http://localhost:5000/api/products/filter?${params.toString()}`
+          `${API}/api/products/filter?${params.toString()}`
         );
 
         if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
@@ -139,7 +140,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
                 <img
                   src={
                     product.images && product.images.length > 0
-                      ? `http://localhost:5000/uploads/${product.images[0]}`
+                      ? `${API}/uploads/${product.images[0]}`
                       : "/placeholder.png"
                   }
                   alt={product.name}

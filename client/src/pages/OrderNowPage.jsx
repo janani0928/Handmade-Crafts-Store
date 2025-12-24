@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+const API = import.meta.env.VITE_API_URL;
 
 const OrderNowPage = () => {
   const { state } = useLocation();
@@ -31,7 +32,7 @@ const OrderNowPage = () => {
     <div style={styles.container}>
       <div style={styles.imageSection}>
         <img
-          src={`http://localhost:5000/uploads/${mainImage || product.image}`}
+          src={`${API}/uploads/${mainImage || product.image}`}
           alt={product.name}
           style={styles.mainImage}
         />

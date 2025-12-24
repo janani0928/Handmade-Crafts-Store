@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CartContext } from '../context/CartContext';
+const API = import.meta.env.VITE_API_URL;
 
 
 const ProductList = () => {
@@ -9,7 +10,7 @@ const ProductList = () => {
     const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/products/')
+        axios.get(`${API}/api/products/`)
             .then(res => setProducts(res.data))
             .catch(err => console.error(err));
     }, []);
@@ -24,7 +25,7 @@ const ProductList = () => {
                     <div key={prod._id} style={styles.card}>
                         {prod.image && (
                             <img
-                                src={`http://localhost:5000/${prod.image}`}
+                                src={`${API}/${prod.image}`}
                                 alt={prod.name}
                                 style={styles.image}
                             />
