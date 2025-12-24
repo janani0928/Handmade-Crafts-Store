@@ -1,6 +1,6 @@
 // server/controllers/ordersController.js
 const Order = require("../Models/Order");
-const Product = require("../Models/Product");
+const Product = require("../Models/product");
 
 
 exports.cancelOrder = async (req, res) => {
