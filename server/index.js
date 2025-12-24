@@ -7,8 +7,8 @@ const ProductRoutes = require('./Routes/productRoutes');
 const categoryRoutes = require('./Routes/CategoryRoutes');
 const path = require("path");
 const addressRoutes = require("./Routes/AddressRoutes");
-const ordersRoutes = require("./Routes/Orders");
-const authRoutes = require("./Routes/Auth");
+const OrdersRoutes = require("./Routes/OrdersRoutes");
+const AuthRoutes = require("./Routes/AuthRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 
 // const upload = require("./middleware/upload");
@@ -27,8 +27,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/products", ProductRoutes);
 app.use("/api", categoryRoutes);
 app.use("/api/address", addressRoutes);
-app.use("/api/orders", ordersRoutes);
-app.use('/api/auth', authRoutes);
+app.use("/api/orders", OrdersRoutes);
+app.use('/api/auth', AuthRoutes);
 // Mount homepage routes at /api
 app.use('/api', homepageRouter);
 
