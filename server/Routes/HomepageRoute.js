@@ -1,5 +1,5 @@
 const express = require('express');
-const { subscribeUser, getAllSubscribers } = require('../controllers/HomepageCtrl');
+const { subscribeUser, getAllSubscribers } = require('../controllers/HomepageController');
 
 const router = express.Router();
 
