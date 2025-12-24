@@ -4,7 +4,7 @@ const {
   createOrder,
   getMyOrders,
   cancelOrder,
-} = require("../controllers/ordersController");
+} = require("../controllers/OrdersController");
 const auth = require("../middleware/authMiddleware");
 
 router.post("/", auth, createOrder);
