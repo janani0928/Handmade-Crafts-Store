@@ -2,13 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const RunServer= require("./Database/Connection");
-const productRoutes = require('./routes/PoroductRoutes');
-const categoryRoutes = require('./routes/categoryRoutes');
+const productRoutes = require('./Routes/productRoutes');
+const categoryRoutes = require('./Routes/categoryRoutes');
 const path = require("path");
-const addressRoutes = require("./routes/addressRoutes");
-const ordersRoutes = require("./routes/ordersRoutes");
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes");
+const addressRoutes = require("./Routes/addressRoutes");
+const ordersRoutes = require("./Routes/ordersRoutes");
+const authRoutes = require("./Routes/authRoutes");
+const userRoutes = require("./Routes/userRoutes");
 
 
 
