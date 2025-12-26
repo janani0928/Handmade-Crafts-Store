@@ -28,23 +28,32 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import ProductSearch from "./components/ProductSearch.jsx";
 import Categoryicons from "./pages/Categoryicons.jsx";
-const API = import.meta.env.VITE_API_URL;
+import API from "./config/api";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
+console.log("API URL:", API);
 
   // Fetch products
   const loadProducts = async () => {
+  try {
     const res = await fetch(`${API}/api/products`);
-    const data = await res.json();
+    const text = await res.text();
+    const data = text ? JSON.parse(text) : [];
     setProducts(data);
-  };
+  } catch (err) {
+    console.error("Failed to load products:", err);
+  }
+};
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+
+useEffect(() => {
+  console.log("API URL:", API);
+  loadProducts();
+}, []);
+
 
   return (
     <CartProvider>

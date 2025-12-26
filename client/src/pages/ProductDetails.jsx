@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import "../App.css";
 import { toast } from "react-toastify";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const ProductDetails = () => {
   const { id } = useParams();

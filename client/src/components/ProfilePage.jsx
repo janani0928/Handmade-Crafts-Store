@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const ProfilePage = () => {
   const navigate = useNavigate();

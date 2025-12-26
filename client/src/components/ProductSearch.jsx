@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const ProductSearch = () => {
   const [query, setQuery] = useState("");

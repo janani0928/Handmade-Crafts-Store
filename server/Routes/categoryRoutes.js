@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Category = require("../Models/category"); // Mongoose model
+const Category = require("../Models/category");
 
 // GET all categories
-router.get("/categories", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const categories = await Category.find({});
     res.json(categories);
@@ -13,7 +13,7 @@ router.get("/categories", async (req, res) => {
 });
 
 // POST category
-router.post("/category", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const { name } = req.body;
     const cat = new Category({ name, subcategories: [] });

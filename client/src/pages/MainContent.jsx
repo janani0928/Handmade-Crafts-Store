@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../config/api";
 
 const MainContent = ({ selectedCategory, onProductSelect }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-const API = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!selectedCategory || !selectedCategory.childId) {

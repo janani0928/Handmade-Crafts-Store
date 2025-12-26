@@ -123,21 +123,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Get all products
-// backend/routes/products.js
-router.get("/", async (req, res) => {
-  try {
-    const filter = {};
-    if (req.query.categoryId) {
-      filter.category = req.query.categoryId; // match category _id
-    }
-
-    const products = await Product.find(filter);
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
 
 // ===============================
 // GET ONE PRODUCT
@@ -145,12 +130,8 @@ router.get("/", async (req, res) => {
 router.get("/search", async (req, res) => {
   try {
     const q = req.query.q?.trim();
-    console.log("Search query:", q);
-
-    // Ignore empty or too short queries
     if (!q || q.length < 2) return res.json([]);
 
-    // Safe regex
     const regex = new RegExp(escapeRegex(q), "i");
 
     const products = await Product.find({
@@ -163,47 +144,16 @@ router.get("/search", async (req, res) => {
       .limit(50)
       .populate("category", "name")
       .populate("subcategory", "name")
-      .populate("childSubcategory", "name")
-      .lean();
+      .populate("childSubcategory", "name");
 
     res.json(products);
   } catch (err) {
-    console.error("Search error full:", err);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 
 
-// 🔍 SEARCH PRODUCTS
-router.get("/search", async (req, res) => {
-  try {
-    const q = req.query.q?.trim();
-    console.log("Search query:", q);
-
-    if (!q || q.length < 2) return res.json([]); // ignore empty or too short queries
-
-    const regex = new RegExp(escapeRegex(q), "i");
-
-    const products = await Product.find({
-      $or: [
-        { name: { $exists: true, $regex: regex } },
-        { description: { $exists: true, $regex: regex } },
-        { brand: { $exists: true, $regex: regex } },
-      ],
-    })
-      .limit(50)
-      .populate("category", "name")
-      .populate("subcategory", "name")
-      .populate("childSubcategory", "name")
-      .lean();
-
-    res.json(products);
-  } catch (err) {
-    console.error("Search error full:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 
 

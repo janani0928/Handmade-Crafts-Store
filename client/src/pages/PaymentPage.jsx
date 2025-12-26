@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 /* ================= HELPERS ================= */
 const isValidUPI = (upi) =>

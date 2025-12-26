@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const OrderNowPage = () => {
   const { state } = useLocation();

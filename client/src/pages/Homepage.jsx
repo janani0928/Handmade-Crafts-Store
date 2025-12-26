@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
 import { useNavigate } from "react-router-dom";
+import API from "../config/api";
 
 const Homepage = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +11,6 @@ const Homepage = () => {
   const [activeCategory, setActiveCategory] = useState(null);
 
   const navigate = useNavigate();
-const API = import.meta.env.VITE_API_URL;
 
   // Fetch all products
 useEffect(() => {

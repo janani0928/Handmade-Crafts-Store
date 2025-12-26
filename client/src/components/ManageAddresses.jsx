@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Flipkart.css";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const ManageAddresses = () => {
   const [addresses, setAddresses] = useState([]);

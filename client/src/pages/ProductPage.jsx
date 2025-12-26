@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MainContent from "./MainContent";        // ✅ import
 import ProductDetails from "./ProductDetails";
 import "./Homepage.css";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 
 const ProductPage = () => {

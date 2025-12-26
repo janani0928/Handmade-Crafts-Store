@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CartContext } from '../context/CartContext';
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 
 const ProductList = () => {

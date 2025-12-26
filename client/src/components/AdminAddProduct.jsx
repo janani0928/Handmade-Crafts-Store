@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const AdminAddProduct = ({ onBack }) => {
   const [categories, setCategories] = useState([]);

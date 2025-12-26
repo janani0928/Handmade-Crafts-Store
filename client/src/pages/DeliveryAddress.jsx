@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import API from "../config/api";
 
 const DeliveryAddress = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const items = location.state?.items || [];
-const API = import.meta.env.VITE_API_URL;
 
   const totalAmount = items.reduce((sum, item) => {
     const price = Number(item.price || 0);

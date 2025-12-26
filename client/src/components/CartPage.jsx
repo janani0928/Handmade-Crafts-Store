@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateQuantity, removeItem } from "../redux/cartSlice";
 import "../pages/Homepage.css";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const CartPage = () => {
   const dispatch = useDispatch();

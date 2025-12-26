@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const EMPTY_HIGHLIGHT = {
   heading: "",

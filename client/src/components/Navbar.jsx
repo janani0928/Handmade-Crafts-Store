@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
-const API = import.meta.env.VITE_API_URL;
+import API from "../config/api";
 
 const Navbar = () => {
   const { cart } = useContext(CartContext);

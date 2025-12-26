@@ -1,7 +1,7 @@
 import React from "react";
+import API from "../config/api";
 
 const CategoryGrid = ({ items, onSelect }) => {
-  const API = import.meta.env.VITE_API_URL;
 
   return (
     <div style={{
