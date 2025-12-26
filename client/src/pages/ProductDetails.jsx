@@ -5,6 +5,7 @@ import { addToCart } from "../redux/cartSlice";
 import "../App.css";
 import { toast } from "react-toastify";
 
+
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();

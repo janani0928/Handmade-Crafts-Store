@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Homepage.css";
 import { useNavigate } from "react-router-dom";
 
+
 const Homepage = () => {
   const [email, setEmail] = useState("");
   const [categories, setCategories] = useState([]);

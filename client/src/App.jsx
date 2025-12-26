@@ -30,6 +30,10 @@ import ProfilePage from "./components/ProfilePage.jsx";
 import ProductSearch from "./components/ProductSearch.jsx";
 import Categoryicons from "./pages/Categoryicons.jsx";
 
+
+
+
+
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);

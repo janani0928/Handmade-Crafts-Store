@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateQuantity, removeItem } from "../redux/cartSlice";
 import "../pages/Homepage.css";
 
+
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
