@@ -65,10 +65,12 @@ const Payment = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (!token) {
-    navigate("/login");
-    return null;
-  }
+if (!token) {
+  alert("Session expired. Please login again.");
+  navigate("/login");
+  return;
+}
+
   if (!items.length || !address)
     return (
       <h2 style={{ textAlign: "center", marginTop: 50 }}>Invalid session</h2>
@@ -112,9 +114,15 @@ const Payment = () => {
           paymentStatus,
         }),
       });
-      const data = await res.json();
-      if (res.ok) navigate("/order-success", { state: data });
-      else alert(data.message || "Failed");
+      const text = await res.text();
+const data = text ? JSON.parse(text) : {};
+
+if (res.ok) {
+  navigate("/order-success", { state: data });
+} else {
+  alert(data.message || "Unauthorized. Please login again.");
+}
+
     } catch (err) {
       console.error(err);
       alert("Server error");
