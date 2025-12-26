@@ -12,71 +12,60 @@ const Homepage = () => {
   const navigate = useNavigate();
 
   // Fetch all products
-useEffect(() => {
-  fetch(`http://localhost:5000/api/products`)
-    .then(async (res) => {
-      const text = await res.text();
-      return text ? JSON.parse(text) : [];
-    })
-    .then((data) => {
-      setAllProducts(data);
-      setFilteredProducts(data);
-    })
-    .catch((err) => {
-      console.error("Failed to load products:", err);
-      setAllProducts([]);
-      setFilteredProducts([]);
-    });
-}, []);
 
+  /* ===================== FETCH PRODUCTS ===================== */
+  useEffect(() => {
+    fetch("http://localhost:5000/api/products")
+      .then(async (res) => {
+        const text = await res.text();
+        return text ? JSON.parse(text) : [];
+      })
+      .then((data) => {
+        const products = Array.isArray(data)
+          ? data
+          : Array.isArray(data.products)
+          ? data.products
+          : [];
 
-
-  // Fetch categories
-useEffect(() => {
-  fetch(`http://localhost:5000/api/categories`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Categories API not found");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      const safeData = Array.isArray(data)
-        ? data.map((cat) => ({
-            ...cat,
-            subcategories: Array.isArray(cat.subcategories)
-              ? cat.subcategories.map((sub) => ({
-                  ...sub,
-                  children: Array.isArray(sub.children)
-                    ? sub.children
-                    : [],
-                }))
-              : [],
-          }))
-        : [];
-      setCategories(safeData);
-    })
-    .catch((err) => {
-      console.error(err);
-      setCategories([]);
-    });
-}, []);
-
-
-  // Handle subscription
-  const handleSubscribe = async () => {
-    try {
-      const res = await fetch(`http://localhost:5000/api/subscribe`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        setAllProducts(products);
+        setFilteredProducts(products);
+      })
+      .catch((err) => {
+        console.error("Failed to load products:", err);
+        setAllProducts([]);
+        setFilteredProducts([]);
       });
-      const data = await res.json();
-      alert(data.message);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  }, []);
+
+  /* ===================== FETCH CATEGORIES ===================== */
+  useEffect(() => {
+    fetch("http://localhost:5000/api/categories")
+      .then((res) => {
+        if (!res.ok) throw new Error("Categories API error");
+        return res.json();
+      })
+      .then((data) => {
+        const safeData = Array.isArray(data)
+          ? data.map((cat) => ({
+              ...cat,
+              subcategories: Array.isArray(cat.subcategories)
+                ? cat.subcategories.map((sub) => ({
+                    ...sub,
+                    children: Array.isArray(sub.children)
+                      ? sub.children
+                      : [],
+                  }))
+                : [],
+            }))
+          : [];
+
+        setCategories(safeData);
+      })
+      .catch((err) => {
+        console.error("Category load error:", err);
+        setCategories([]);
+      });
+  }, []);
 
   // Handle category click
 const handleCategoryClick = (cat) => {
