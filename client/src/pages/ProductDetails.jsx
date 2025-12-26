@@ -21,33 +21,47 @@ const ProductDetails = () => {
   const [y, setY] = useState(50);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
-  // Fetch all products
+   // Fetch all products
   useEffect(() => {
     fetch(`${API}/api/products`)
-      .then(res => res.json())
-      .then(data => setAllProducts(data))
-      .catch(err => console.error(err));
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Products API failed: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setAllProducts(Array.isArray(data) ? data : []))
+      .catch((err) => {
+        console.error("Products load error:", err);
+        setAllProducts([]);
+      });
   }, []);
 
   // Fetch current product
   useEffect(() => {
     fetch(`${API}/api/products/${id}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Product not found");
+      .then(async (res) => {
+        if (!res.ok) throw new Error(`Product not found: ${res.status}`);
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
+        if (!data) return;
         setProduct(data);
         setMainImage(data.images?.[0] || data.image || "");
-        // Example: set relatedProducts based on category or other logic
-        setRelatedProducts(
-          data.category
-            ? allProducts.filter(p => p._id !== data._id && p.category === data.category)
-            : []
-        );
       })
-      .catch(err => console.error("Error fetching product:", err));
-  }, [id, allProducts]);
+      .catch((err) => console.error("Product fetch error:", err));
+  }, [id]);
+
+  // Filter related products
+  useEffect(() => {
+    if (!product || !product.category) return;
+    const related = allProducts.filter(
+      (p) =>
+        p._id !== product._id &&
+        (p.category?._id || p.category) === (product.category?._id || product.category)
+    );
+    setRelatedProducts(related);
+  }, [product, allProducts]);
+
+
 
   if (!product) {
     return <p style={styles.loading}>Loading product...</p>;
