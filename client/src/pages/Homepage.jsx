@@ -15,22 +15,21 @@ const Homepage = () => {
   // Fetch all products
 useEffect(() => {
   fetch(`${API}/api/products`)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error("Products API not found");
-      }
-      return res.json();
+    .then(async (res) => {
+      const text = await res.text();
+      return text ? JSON.parse(text) : [];
     })
     .then((data) => {
       setAllProducts(data);
       setFilteredProducts(data);
     })
     .catch((err) => {
-      console.error(err);
+      console.error("Failed to load products:", err);
       setAllProducts([]);
       setFilteredProducts([]);
     });
-}, [API]);
+}, []);
+
 
 
   // Fetch categories

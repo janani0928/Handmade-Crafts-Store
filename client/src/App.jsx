@@ -37,14 +37,23 @@ const App = () => {
 console.log("API URL:", API);
 
   // Fetch products
-  const loadProducts = async () => {
+const loadProducts = async () => {
+  if (!API) {
+    console.error("API URL is undefined");
+    return;
+  }
+
   try {
     const res = await fetch(`${API}/api/products`);
-    const text = await res.text();
-    const data = text ? JSON.parse(text) : [];
+
+    if (!res.ok) {
+      throw new Error(`API error: ${res.status}`);
+    }
+
+    const data = await res.json();
     setProducts(data);
   } catch (err) {
-    console.error("Failed to load products:", err);
+    console.error("Failed to load products:", err.message);
   }
 };
 
