@@ -1,40 +1,79 @@
-const Address = require("../Models/Address");
+const Category = require("../Models/category");
 
-// Add Address
-exports.addAddress = async (req, res) => {
+// ----------------------
+// Get All Categories
+// ----------------------
+exports.getCategories = async (req, res) => {
   try {
-    console.log("Saving address:", req.body);
-    const address = await Address.create(req.body);
-    res.json({ success: true, address });
-  } catch (error) {
-    console.log("Error saving:", error);
-    res.status(500).json({ success: false, message: error.message });
+    const categories = await Category.find();
+    res.json(categories);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Get all addresses
-exports.getAddresses = async (req, res) => {
+// ----------------------
+// Add Category
+// ----------------------
+exports.addCategory = async (req, res) => {
   try {
-    const addresses = await Address.find();
-    res.json({ success: true, addresses });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    const { name } = req.body;
+
+    const exists = await Category.findOne({ name });
+    if (exists) return res.status(400).json({ message: "Category already exists" });
+
+    const category = new Category({ name, subcategories: [] });
+    await category.save();
+
+    res.json({ message: "Category added", category });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-// Update address by ID
-exports.updateAddress = async (req, res) => {
+// ----------------------
+// Add Subcategory
+// ----------------------
+exports.addSubcategory = async (req, res) => {
   try {
-    const updatedAddress = await Address.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
+    const { categoryId, subcategoryName } = req.body;
+
+    const category = await Category.findById(categoryId);
+    if (!category) return res.status(404).json({ message: "Category not found" });
+
+    // If exists?
+    const exists = category.subcategories.some(
+      (sub) => sub.name.toLowerCase() === subcategoryName.toLowerCase()
     );
-    if (!updatedAddress)
-      return res.status(404).json({ success: false, message: "Address not found" });
+    if (exists) return res.status(400).json({ message: "Subcategory already exists" });
 
-    res.json({ success: true, data: updatedAddress });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    category.subcategories.push({ name: subcategoryName, children: [] });
+    await category.save();
+
+    res.json({ message: "Subcategory added", category });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ----------------------
+// Add Child Subcategory
+// ----------------------
+exports.addChildSubcategory = async (req, res) => {
+  try {
+    const { categoryId, subcategoryId, childName } = req.body;
+
+    const category = await Category.findById(categoryId);
+    if (!category) return res.status(404).json({ message: "Category not found" });
+
+    const subcategory = category.subcategories.id(subcategoryId);
+    if (!subcategory) return res.status(404).json({ message: "Subcategory not found" });
+
+    subcategory.children.push({ name: childName });
+    await category.save();
+
+    res.json({ message: "Child subcategory added", category });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
