@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import API from "../config/api";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -42,7 +41,7 @@ const ProfilePage = () => {
 
       try {
         const res = await axios.get(
-          `${API}/api/users/profile`,
+          `http://localhost:5000/api/users/profile`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setUser(res.data);
@@ -63,7 +62,7 @@ const ProfilePage = () => {
       const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
-          `${API}/api/address/list`,
+          `http://localhost:5000/api/address/list`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setAddressList(res.data.addresses || []);
@@ -81,7 +80,7 @@ const ProfilePage = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        `${API}/api/users/profile`,
+        `http://localhost:5000/api/users/profile`,
         user,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -255,7 +254,7 @@ const ProfilePage = () => {
                       if (!window.confirm("Delete this address?")) return;
                       const token = localStorage.getItem("token");
                       await axios.delete(
-                        `${API}/api/address/delete/${addr._id}`,
+                        `http://localhost:5000/api/address/delete/${addr._id}`,
                         { headers: { Authorization: `Bearer ${token}` } }
                       );
                       setAddressList(

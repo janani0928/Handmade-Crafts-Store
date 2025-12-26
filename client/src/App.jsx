@@ -28,41 +28,22 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import ProfilePage from "./components/ProfilePage.jsx";
 import ProductSearch from "./components/ProductSearch.jsx";
 import Categoryicons from "./pages/Categoryicons.jsx";
-import API from "./config/api";
 
 const App = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-console.log("API URL:", API);
 
   // Fetch products
-const loadProducts = async () => {
-  if (!API) {
-    console.error("API URL is undefined");
-    return;
-  }
-
-  try {
-    const res = await fetch(`${API}/api/products`);
-
-    if (!res.ok) {
-      throw new Error(`API error: ${res.status}`);
-    }
-
+  const loadProducts = async () => {
+    const res = await fetch(`http://localhost:5000/api/products`);
     const data = await res.json();
     setProducts(data);
-  } catch (err) {
-    console.error("Failed to load products:", err.message);
-  }
-};
+  };
 
-
-useEffect(() => {
-  console.log("API URL:", API);
-  loadProducts();
-}, []);
-
+  useEffect(() => {
+    loadProducts();
+  }, []);
 
   return (
     <CartProvider>

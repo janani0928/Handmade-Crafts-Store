@@ -16,18 +16,7 @@ const userRoutes = require("./Routes/userRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173", // local dev
-      "https://handmade-crafts-store-1.onrender.com", // frontend Render URL
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  })
-);
-
+app.use(cors());
 app.use(express.json());
 
 // Serve image files

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import API from "../config/api";
 
 const OrderSummary = () => {
   const { state } = useLocation();
@@ -178,7 +177,7 @@ const OrderSummary = () => {
                     <img
                       src={
                         item.images && item.images.length > 0
-                          ? `${API}/uploads/${item.images[0]}`
+                          ? `http://localhost:5000/uploads/${item.images[0]}`
                           : "/placeholder.png"
                       }
                       alt={item.name}

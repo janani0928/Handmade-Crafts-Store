@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import API from "../config/api";
 
 const Sidebar = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([]);
@@ -16,7 +15,7 @@ const Sidebar = ({ onCategorySelect }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`${API}/api/categories`)
+    fetch(`http://localhost:5000/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         const safeData = data.map((cat) => ({

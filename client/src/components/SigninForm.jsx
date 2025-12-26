@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import API from "../config/api";
 
 const LoginPage = () => {
   const [emailOrMobile, setEmailOrMobile] = useState("");
@@ -19,7 +18,7 @@ const LoginPage = () => {
 
     try {
       const res = await axios.post(
-        `${API}/api/auth/login`,
+        `http://localhost:5000/api/auth/login`,
         { email: emailOrMobile, password }, // ✅ Include password
         { headers: { "Content-Type": "application/json" } }
       );

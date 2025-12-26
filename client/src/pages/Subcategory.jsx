@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import API from "../config/api";
 
 const AddSubcategory = () => {
   const [categories, setCategories] = useState([]);
@@ -16,7 +15,7 @@ const AddSubcategory = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${API}/api/categories`);
+      const res = await fetch(`http://localhost:5000/api/categories`);
       const data = await res.json();
       setCategories(data);
       // Optionally, reset category selection
@@ -35,7 +34,7 @@ const AddSubcategory = () => {
     setError("");
 
     try {
-      const res = await fetch(`${API}/api/categories/add-subcategory`, {
+      const res = await fetch(`http://localhost:5000/api/categories/add-subcategory`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ categoryName, subcategoryName }),
@@ -43,7 +42,7 @@ const AddSubcategory = () => {
 
       if (!res.ok) throw new Error("Failed to add subcategory");
 
-      const updatedCategories = await fetch(`${API}/api/categories`).then((res) => res.json());
+      const updatedCategories = await fetch(`http://localhost:5000/api/categories`).then((res) => res.json());
       setCategories(updatedCategories);
 
       // Update subcategory list for selected category

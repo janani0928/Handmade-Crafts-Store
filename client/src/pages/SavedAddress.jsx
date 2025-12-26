@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import API from "../config/api";
 
 const SavedAddress = () => {
   const { state } = useLocation();
@@ -14,7 +13,7 @@ const SavedAddress = () => {
 
   useEffect(() => {
     axios
-      .get(`${API}/api/address/list`)
+      .get(`http://localhost:5000/api/address/list`)
       .then((res) => setAddressList(res.data.addresses))
       .catch((err) => console.log(err));
   }, []);

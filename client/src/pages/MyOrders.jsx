@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import API from "../config/api";
 
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -10,7 +9,7 @@ const MyOrders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${API}/api/orders/my-orders`, {
+      const res = await axios.get(`http://localhost:5000/api/orders/my-orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(res.data);
@@ -99,7 +98,7 @@ const confirmCancel = async (orderId) => {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `${API}/api/orders/cancel/${orderId}`,
+      `http://localhost:5000/api/orders/cancel/${orderId}`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -174,7 +173,7 @@ const confirmCancel = async (orderId) => {
               return (
                 <div key={idx} style={styles.orderItem}>
                   <img
-                    src={`${API}/uploads/${item.images?.[0]}`}
+                    src={`http://localhost:5000/uploads/${item.images?.[0]}`}
                     alt={item.name}
                     style={styles.image}
                   />

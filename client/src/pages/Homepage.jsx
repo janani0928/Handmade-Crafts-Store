@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
 import { useNavigate } from "react-router-dom";
-import API from "../config/api";
 
 const Homepage = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +13,7 @@ const Homepage = () => {
 
   // Fetch all products
 useEffect(() => {
-  fetch(`${API}/api/products`)
+  fetch(`http://localhost:5000/api/products`)
     .then(async (res) => {
       const text = await res.text();
       return text ? JSON.parse(text) : [];
@@ -34,7 +33,7 @@ useEffect(() => {
 
   // Fetch categories
 useEffect(() => {
-  fetch(`${API}/api/categories`)
+  fetch(`http://localhost:5000/api/categories`)
     .then((res) => {
       if (!res.ok) {
         throw new Error("Categories API not found");
@@ -61,13 +60,13 @@ useEffect(() => {
       console.error(err);
       setCategories([]);
     });
-}, [API]);
+}, []);
 
 
   // Handle subscription
   const handleSubscribe = async () => {
     try {
-      const res = await fetch(`${API}/api/subscribe`, {
+      const res = await fetch(`http://localhost:5000/api/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -203,7 +202,7 @@ const handleCategoryClick = (cat) => {
                 <span className="discount-badge">{p.discount}% off</span>
               )}
               <img
-                src={`${API}/uploads/${
+                src={`http://localhost:5000/uploads/${
                   p.images?.[0] || p.image
                 }`}
                 alt={p.name}

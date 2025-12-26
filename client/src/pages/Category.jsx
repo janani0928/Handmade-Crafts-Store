@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import API from "../config/api";
 
 const AddCategory = () => {
   const [name, setName] = useState("");
@@ -21,7 +20,7 @@ const AddCategory = () => {
     };
 
     try {
-      const res = await fetch(`${API}/api/categories`, {
+      const res = await fetch(`http://localhost:5000/api/categories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

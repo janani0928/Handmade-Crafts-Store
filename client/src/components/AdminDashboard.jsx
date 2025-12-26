@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import API from "../config/api";
 
 const EMPTY_HIGHLIGHT = {
   heading: "",
@@ -43,7 +42,7 @@ const AdminDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${API}/api/categories`);
+      const res = await fetch(`http://localhost:5000/api/categories`);
       const data = await res.json();
       setCategories(data);
     } catch (err) {
@@ -54,7 +53,7 @@ const AdminDashboard = () => {
   /* ================= CATEGORY MANAGEMENT ================= */
   const addCategory = async () => {
     if (!categoryName.trim()) return;
-    await fetch(`${API}/api/category`, {
+    await fetch(`http://localhost:5000/api/category`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: categoryName.trim() }),
@@ -65,7 +64,7 @@ const AdminDashboard = () => {
 
   const addSubcategory = async () => {
     if (!selectedCategory || !subcategoryName.trim()) return;
-    await fetch(`${API}/api/subcategory/${selectedCategory}`, {
+    await fetch(`http://localhost:5000/api/subcategory/${selectedCategory}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: subcategoryName.trim() }),
@@ -77,7 +76,7 @@ const AdminDashboard = () => {
   const addChildSubcategory = async () => {
     if (!selectedCategory || !selectedSubcategory || !childName.trim()) return;
     await fetch(
-      `${API}/api/child-subcategory/${selectedCategory}/${selectedSubcategory}`,
+      `http://localhost:5000/api/child-subcategory/${selectedCategory}/${selectedSubcategory}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -189,7 +188,7 @@ const AdminDashboard = () => {
     });
 
     try {
-      const res = await fetch(`${API}/api/products`, {
+      const res = await fetch(`http://localhost:5000/api/products`, {
         method: "POST",
         body,
       });

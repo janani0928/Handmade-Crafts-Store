@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import MainContent from "./MainContent";        // ✅ import
 import ProductDetails from "./ProductDetails";
 import "./Homepage.css";
-import API from "../config/api";
 
 
 const ProductPage = () => {
@@ -18,7 +17,7 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${API}/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
+          `http://localhost:5000/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
         );
         const data = await res.json();
         setProducts(data);

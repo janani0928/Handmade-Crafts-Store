@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import API from "../config/api";
 
 const ProductSearch = () => {
   const [query, setQuery] = useState("");
@@ -18,7 +17,7 @@ const ProductSearch = () => {
       setLoading(true);
       try {
         const { data } = await axios.get(
-          `${API}/api/products/search?q=${encodeURIComponent(
+          `http://localhost:5000/api/products/search?q=${encodeURIComponent(
             query
           )}`
         );

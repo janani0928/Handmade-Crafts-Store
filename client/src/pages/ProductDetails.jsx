@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import "../App.css";
 import { toast } from "react-toastify";
-import API from "../config/api";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -23,7 +22,7 @@ const ProductDetails = () => {
 
    // Fetch all products
   useEffect(() => {
-    fetch(`${API}/api/products`)
+    fetch(`http://localhost:5000/api/products`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`Products API failed: ${res.status}`);
         return res.json();
@@ -37,7 +36,7 @@ const ProductDetails = () => {
 
   // Fetch current product
   useEffect(() => {
-    fetch(`${API}/api/products/${id}`)
+    fetch(`http://localhost:5000/api/products/${id}`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`Product not found: ${res.status}`);
         return res.json();
@@ -106,7 +105,7 @@ const ProductDetails = () => {
               .map((img, i) => (
                 <img
                   key={i}
-                  src={`${API}/uploads/${img}`}
+                  src={`http://localhost:5000/uploads/${img}`}
                   alt=""
                   onClick={() => setMainImage(img)}
                   style={{
@@ -122,7 +121,7 @@ const ProductDetails = () => {
           <div style={styles.mainImageWrapper}>
             <div style={{ ...styles.mainImageWrapper, overflow: "hidden", position: "relative" }}>
               <img
-                src={`${API}/uploads/${mainImage}`}
+                src={`http://localhost:5000/uploads/${mainImage}`}
                 alt={product.name}
                 style={{
                   ...styles.mainImageZoom,
@@ -280,7 +279,7 @@ const ProductCard = ({ product, navigate }) => {
       onClick={() => navigate(`/product/${product._id}`)}
     >
       <img
-        src={`${API}/uploads/${product.images?.[0] || product.image}`}
+        src={`http://localhost:5000/uploads/${product.images?.[0] || product.image}`}
         alt={product.name}
         style={styles.productCardImage}
       />

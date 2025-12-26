@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CartContext } from '../context/CartContext';
-import API from "../config/api";
 
 
 const ProductList = () => {
@@ -10,7 +9,7 @@ const ProductList = () => {
     const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
-        axios.get(`${API}/api/products/`)
+        axios.get(`http://localhost:5000/api/products/`)
             .then(res => setProducts(res.data))
             .catch(err => console.error(err));
     }, []);
