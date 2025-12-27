@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Homepage.css";
 import { useNavigate } from "react-router-dom";
-
+import API_BASE_URL from "../utils/api"
 
 const Homepage = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const Homepage = () => {
 
   /* ===================== FETCH PRODUCTS ===================== */
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_BASE_URL}/api/products`)
       .then(async (res) => {
         const text = await res.text();
         return text ? JSON.parse(text) : [];
@@ -40,7 +40,7 @@ const Homepage = () => {
 
   /* ===================== FETCH CATEGORIES ===================== */
   useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
+    fetch(`${API_BASE_URL}/api/categories`)
       .then((res) => {
         if (!res.ok) throw new Error("Categories API error");
         return res.json();
@@ -192,7 +192,7 @@ const handleCategoryClick = (cat) => {
                 <span className="discount-badge">{p.discount}% off</span>
               )}
               <img
-                src={`http://localhost:5000/uploads/${
+                src={`${API_BASE_URL}/uploads/${
                   p.images?.[0] || p.image
                 }`}
                 alt={p.name}

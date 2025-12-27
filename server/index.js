@@ -9,6 +9,7 @@ const addressRoutes = require("./Routes/addressRoutes");
 const ordersRoutes = require("./Routes/ordersRoutes");
 const authRoutes = require("./Routes/RuthRoutes");
 const userRoutes = require("./Routes/userRoutes");
+const collectionRoutes = require("./Routes/collectionRoutes");
 
 
 
@@ -42,6 +43,7 @@ app.use("/api/address", addressRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use('/api/auth', authRoutes);
 // Mount homepage routes at /api
+app.use("/collection", collectionRoutes);
 
 app.use("/api/users", userRoutes);
 
