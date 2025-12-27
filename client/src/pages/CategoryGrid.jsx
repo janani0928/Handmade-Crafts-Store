@@ -1,6 +1,7 @@
 import React from "react";
-const CategoryGrid = ({ items, onSelect }) => {
+import API_BASE_URL from "../utils/api";
 
+const CategoryGrid = ({ items, onSelect }) => {
   return (
     <div style={{
       display: "grid",
@@ -18,7 +19,7 @@ const CategoryGrid = ({ items, onSelect }) => {
           }}
         >
           <img
-            src={`http://localhost:5000${item.image}`}
+            src={`${API_BASE_URL}${item.image}`}
             alt={item.name}
             style={{
               width: "100px",

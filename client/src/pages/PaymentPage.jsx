@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import API_BASE_URL from "../utils/api";
 /* ================= HELPERS ================= */
 const isValidUPI = (upi) =>
   /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/.test(upi);
@@ -99,7 +99,7 @@ if (!token) {
     setLoading(true);
     const paymentStatus = method === "COD" ? "Pending" : "Paid";
     try {
-      const res = await fetch(`http://localhost:5000/api/orders`, {
+      const res = await fetch(`${API_BASE_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

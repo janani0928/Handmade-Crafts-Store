@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../utils/api";
 
 const MainContent = ({ selectedCategory, onProductSelect }) => {
   const [products, setProducts] = useState([]);
@@ -25,7 +26,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
         params.append("childId", selectedCategory.childId);
 
         const res = await fetch(
-          `http://localhost:5000/api/products/filter?${params.toString()}`
+          `${API_BASE_URL}/api/products/filter?${params.toString()}`
         );
 
         if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
@@ -139,7 +140,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
                 <img
                   src={
                     product.images && product.images.length > 0
-                      ? `http://localhost:5000/uploads/${product.images[0]}`
+                      ? `${API_BASE_URL}/uploads/${product.images[0]}`
                       : "/placeholder.png"
                   }
                   alt={product.name}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import API_BASE_URL from "../utils/api";
 const Sidebar = ({ onCategorySelect }) => {
   const [categories, setCategories] = useState([]);
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -15,7 +15,7 @@ const Sidebar = ({ onCategorySelect }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/categories`)
+    fetch(`${API_BASE_URL}/api/categories`)
       .then((res) => res.json())
       .then((data) => {
         const safeData = data.map((cat) => ({

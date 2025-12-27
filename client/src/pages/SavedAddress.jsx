@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import API_BASE_URL from "../utils/api";
 const SavedAddress = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const SavedAddress = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/address/list`)
+      .get(`${API_BASE_URL}/api/address/list`)
       .then((res) => setAddressList(res.data.addresses))
       .catch((err) => console.log(err));
   }, []);

@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
 import "../App.css";
 import { toast } from "react-toastify";
-
+import API_BASE_URL from "../utils/api";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -23,7 +23,7 @@ const ProductDetails = () => {
 
    // Fetch all products
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products`)
+    fetch(`${API_BASE_URL}/api/products`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`Products API failed: ${res.status}`);
         return res.json();
@@ -37,7 +37,7 @@ const ProductDetails = () => {
 
   // Fetch current product
   useEffect(() => {
-    fetch(`http://localhost:5000/api/products/${id}`)
+    fetch(`${API_BASE_URL}/api/products/${id}`)
       .then(async (res) => {
         if (!res.ok) throw new Error(`Product not found: ${res.status}`);
         return res.json();
@@ -106,7 +106,7 @@ const ProductDetails = () => {
               .map((img, i) => (
                 <img
                   key={i}
-                  src={`http://localhost:5000/uploads/${img}`}
+                  src={`${API_BASE_URL}/uploads/${img}`}
                   alt=""
                   onClick={() => setMainImage(img)}
                   style={{
@@ -122,7 +122,7 @@ const ProductDetails = () => {
           <div style={styles.mainImageWrapper}>
             <div style={{ ...styles.mainImageWrapper, overflow: "hidden", position: "relative" }}>
               <img
-                src={`http://localhost:5000/uploads/${mainImage}`}
+                src={`${API_BASE_URL}/uploads/${mainImage}`}
                 alt={product.name}
                 style={{
                   ...styles.mainImageZoom,
@@ -280,7 +280,7 @@ const ProductCard = ({ product, navigate }) => {
       onClick={() => navigate(`/product/${product._id}`)}
     >
       <img
-        src={`http://localhost:5000/uploads/${product.images?.[0] || product.image}`}
+        src={`${API_BASE_URL}/uploads/${product.images?.[0] || product.image}`}
         alt={product.name}
         style={styles.productCardImage}
       />

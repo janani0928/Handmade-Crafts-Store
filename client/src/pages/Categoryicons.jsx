@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import API_BASE_URL from "../utils/api";
 
 
 const Categoryicons = () => {
@@ -22,7 +22,7 @@ const Categoryicons = () => {
 
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/products`);
+        const res = await axios.get(`${API_BASE_URL}/api/products`);
         if (!res.data) throw new Error("No data");
 
         // Filter products by category or subcategory
@@ -80,7 +80,7 @@ const Categoryicons = () => {
                 )}
 
                 <img
-                  src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
+                  src={`${API_BASE_URL}/uploads/${p.images?.[0] || p.image}`}
                   alt={p.name}
                   className="product-image"
                   style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}

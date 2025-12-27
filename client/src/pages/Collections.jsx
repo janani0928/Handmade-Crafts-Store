@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import MainContent from "./MainContent";
 import ProductDetails from "../pages/ProductDetails";
 
+
 const Collection = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);

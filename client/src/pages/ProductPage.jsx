@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MainContent from "./MainContent";        // ✅ import
 import ProductDetails from "./ProductDetails";
 import "./Homepage.css";
-
+import API_BASE_URL from "../utils/api";
 
 const ProductPage = () => {
   const { categoryId, subcategoryId, childId } = useParams();
@@ -17,7 +17,7 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
+          `${API_BASE_URL}/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
         );
         const data = await res.json();
         setProducts(data);
