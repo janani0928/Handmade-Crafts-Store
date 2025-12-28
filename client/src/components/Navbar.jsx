@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import axios from "axios";
-
+import API_BASE_URL from "../utils/api";
 const Navbar = () => {
   const { cart } = useContext(CartContext);
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ useEffect(() => {
     }
 
     axios
-      .get(`http://localhost:5000/api/products/search?q=${encodeURIComponent(trimmed)}`)
+      .get(`${API_BASE_URL}/products/search?q=${encodeURIComponent(trimmed)}`)
       .then((res) => setSearchResults(res.data || []))
       .catch((err) => console.error("Search error:", err));
   }, 300);

@@ -2,14 +2,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { CartContext } from '../context/CartContext';
-
+import API_BASE_URL from '../utils/api';
 
 const ProductList = () => {
     const [products, setProducts] = useState([]);
     const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/products/`)
+        axios.get(`${API_BASE_URL}/products/`)
             .then(res => setProducts(res.data))
             .catch(err => console.error(err));
     }, []);

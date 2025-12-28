@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import API_BASE_URL from "../utils/api"
 
 const AdminAddProduct = ({ onBack }) => {
   const [categories, setCategories] = useState([]);
@@ -15,14 +16,14 @@ const AdminAddProduct = ({ onBack }) => {
 
   // Load all categories
  useEffect(() => {
-  fetch( `http://localhost:5000/api/categories`)
+  fetch( `${API_BASE_URL}/categories`)
     .then((res) => res.json())
     .then((data) => setCategories(data));
 }, []);
 
 // 🔥 Refresh categories every time user opens dropdown
 const refreshCategories = () => {
-  fetch( `http://localhost:5000/api/categories`)
+  fetch( `${API_BASE_URL}categories`)
     .then((res) => res.json())
     .then((data) => setCategories(data));
 };
@@ -52,7 +53,7 @@ const refreshCategories = () => {
     const body = new FormData();
     for (const key in formData) body.append(key, formData[key]);
 
-    const res = await fetch(`http://localhost:5000/api/products`, {
+    const res = await fetch(`${API_BASE_URL}/products`, {
       method: "POST",
       body,
     });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Flipkart.css";
-
+import API_BASE_URL from "../utils/api";
 const ManageAddresses = () => {
   const [addresses, setAddresses] = useState([]);
   const token = localStorage.getItem("token");
@@ -10,7 +10,7 @@ const ManageAddresses = () => {
     const fetchAddresses = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/addresses/my-addresses`,
+          `${API_BASE_URL}/addresses/my-addresses`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

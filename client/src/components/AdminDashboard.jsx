@@ -42,7 +42,7 @@ const AdminDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/categories`);
+      const res = await fetch(`${API_BASE_URL}/categories`);
       const data = await res.json();
       setCategories(data);
     } catch (err) {
@@ -53,7 +53,7 @@ const AdminDashboard = () => {
   /* ================= CATEGORY MANAGEMENT ================= */
   const addCategory = async () => {
     if (!categoryName.trim()) return;
-    await fetch(`http://localhost:5000/api/category`, {
+    await fetch(`${API_BASE_URL}/category`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: categoryName.trim() }),
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
 
   const addSubcategory = async () => {
     if (!selectedCategory || !subcategoryName.trim()) return;
-    await fetch(`http://localhost:5000/api/subcategory/${selectedCategory}`, {
+    await fetch(`${API_BASE_URL}/subcategory/${selectedCategory}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: subcategoryName.trim() }),
@@ -76,7 +76,7 @@ const AdminDashboard = () => {
   const addChildSubcategory = async () => {
     if (!selectedCategory || !selectedSubcategory || !childName.trim()) return;
     await fetch(
-      `http://localhost:5000/api/child-subcategory/${selectedCategory}/${selectedSubcategory}`,
+      `${API_BASE_URL}/child-subcategory/${selectedCategory}/${selectedSubcategory}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -188,7 +188,7 @@ const AdminDashboard = () => {
     });
 
     try {
-      const res = await fetch(`http://localhost:5000/api/products`, {
+      const res = await fetch(`${API_BASE_URL}/products`, {
         method: "POST",
         body,
       });
