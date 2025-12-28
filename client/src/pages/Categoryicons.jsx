@@ -12,7 +12,6 @@ const Categoryicons = () => {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   useEffect(() => {
     if (!categoryLabel) {
@@ -81,7 +80,7 @@ const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
                 )}
 
                 <img
-                  src={`${IMAGE_BASE_URL}/uploads/${p.images?.[0] || p.image}`}
+                  src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
                   alt={p.name}
                   className="product-image"
                   style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}

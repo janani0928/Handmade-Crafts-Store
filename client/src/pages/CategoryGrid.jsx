@@ -21,7 +21,7 @@ const CategoryGrid = ({ items, onSelect }) => {
           }}
         >
           <img
-            src={`${IMAGE_BASE_URL}${item.image}`}
+            src={`http://localhost:5000${item.image}`}
             alt={item.name}
             style={{
               width: "100px",

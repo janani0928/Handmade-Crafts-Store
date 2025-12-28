@@ -19,7 +19,6 @@ const ProductDetails = () => {
   const [x, setX] = useState(50);
   const [y, setY] = useState(50);
   const [relatedProducts, setRelatedProducts] = useState([]);
-const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
    // Fetch all products
   useEffect(() => {
@@ -106,7 +105,7 @@ const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
               .map((img, i) => (
                 <img
                   key={i}
-                  src={`${IMAGE_BASE_URL}/uploads/${img}`}
+                  src={`http://localhost:5000/uploads/${img}`}
                   alt=""
                   onClick={() => setMainImage(img)}
                   style={{
@@ -122,7 +121,7 @@ const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
           <div style={styles.mainImageWrapper}>
             <div style={{ ...styles.mainImageWrapper, overflow: "hidden", position: "relative" }}>
               <img
-                src={`${IMAGE_BASE_URL}/uploads/${mainImage}`}
+                src={`http://localhost:5000/uploads/${mainImage}`}
                 alt={product.name}
                 style={{
                   ...styles.mainImageZoom,

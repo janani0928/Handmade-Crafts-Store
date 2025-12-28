@@ -9,7 +9,6 @@ const Homepage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
-const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   const navigate = useNavigate();
 
@@ -200,7 +199,7 @@ const handleCategoryClick = (cat) => {
               <img
                    src={
     p.images?.[0] || p.image
-      ? `${IMAGE_BASE_URL}/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
+      ? `http://localhost:5000/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
       : "/placeholder.png"
   }
   alt={p.name}

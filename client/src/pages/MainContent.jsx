@@ -7,7 +7,6 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   useEffect(() => {
     if (!selectedCategory || !selectedCategory.childId) {
@@ -141,7 +140,7 @@ const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
                 <img
                   src={
                     product.images && product.images.length > 0
-                      ? `${IMAGE_BASE_URL}/uploads/${product.images[0]}`
+                      ? `http://localhost:5000/uploads/${product.images[0]}`
                       : "/placeholder.png"
                   }
                   alt={product.name}
