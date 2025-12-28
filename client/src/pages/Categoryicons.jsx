@@ -22,7 +22,7 @@ const Categoryicons = () => {
 
     const fetchProducts = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/api/products`);
+        const res = await axios.get(`${API_BASE_URL}/products`);
         if (!res.data) throw new Error("No data");
 
         // Filter products by category or subcategory
