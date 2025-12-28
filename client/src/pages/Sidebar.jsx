@@ -15,7 +15,7 @@ const Sidebar = ({ onCategorySelect }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/categories`)
+    fetch(`${API_BASE_URL}/categories`)
       .then((res) => res.json())
       .then((data) => {
         const safeData = data.map((cat) => ({

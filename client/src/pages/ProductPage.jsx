@@ -17,7 +17,7 @@ const ProductPage = () => {
     const fetchProducts = async () => {
       try {
         const res = await fetch(
-          `${API_BASE_URL}/api/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
+          `${API_BASE_URL}/products?category=${categoryId}&subcategory=${subcategoryId}&child=${childId}`
         );
         const data = await res.json();
         setProducts(data);

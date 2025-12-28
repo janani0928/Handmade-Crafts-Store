@@ -7,6 +7,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   useEffect(() => {
     if (!selectedCategory || !selectedCategory.childId) {
@@ -26,7 +27,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
         params.append("childId", selectedCategory.childId);
 
         const res = await fetch(
-          `${API_BASE_URL}/api/products/filter?${params.toString()}`
+          `${API_BASE_URL}/products/filter?${params.toString()}`
         );
 
         if (!res.ok) throw new Error(`Failed to fetch products: ${res.status}`);
@@ -140,7 +141,7 @@ const MainContent = ({ selectedCategory, onProductSelect }) => {
                 <img
                   src={
                     product.images && product.images.length > 0
-                      ? `${API_BASE_URL}/uploads/${product.images[0]}`
+                      ? `${IMAGE_BASE_URL}/uploads/${product.images[0]}`
                       : "/placeholder.png"
                   }
                   alt={product.name}

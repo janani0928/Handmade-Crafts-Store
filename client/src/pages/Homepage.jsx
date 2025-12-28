@@ -9,64 +9,70 @@ const Homepage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
+const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   const navigate = useNavigate();
 
   // Fetch all products
 
+
   /* ===================== FETCH PRODUCTS ===================== */
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/products`)
-      .then(async (res) => {
-        const text = await res.text();
-        return text ? JSON.parse(text) : [];
-      })
-      .then((data) => {
-        const products = Array.isArray(data)
-          ? data
-          : Array.isArray(data.products)
-          ? data.products
-          : [];
+// Fetch products
+useEffect(() => {
+  const loadProducts = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/products`);
+      if (!res.ok) throw new Error("Products API error");
+      const data = await res.json();
 
-        setAllProducts(products);
-        setFilteredProducts(products);
-      })
-      .catch((err) => {
-        console.error("Failed to load products:", err);
-        setAllProducts([]);
-        setFilteredProducts([]);
-      });
-  }, []);
+      const products = Array.isArray(data)
+        ? data
+        : Array.isArray(data.products)
+        ? data.products
+        : [];
 
-  /* ===================== FETCH CATEGORIES ===================== */
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/categories`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Categories API error");
-        return res.json();
-      })
-      .then((data) => {
-        const safeData = Array.isArray(data)
-          ? data.map((cat) => ({
-              ...cat,
-              subcategories: Array.isArray(cat.subcategories)
-                ? cat.subcategories.map((sub) => ({
-                    ...sub,
-                    children: Array.isArray(sub.children)
-                      ? sub.children
-                      : [],
-                  }))
-                : [],
-            }))
-          : [];
+      setAllProducts(products);
+      setFilteredProducts(products);
+    } catch (err) {
+      console.error("Failed to load products:", err);
+      setAllProducts([]);
+      setFilteredProducts([]);
+    }
+  };
 
-        setCategories(safeData);
-      })
-      .catch((err) => {
-        console.error("Category load error:", err);
-        setCategories([]);
-      });
-  }, []);
+  loadProducts();
+}, []);
+
+// Fetch categories
+useEffect(() => {
+  const loadCategories = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/categories`);
+      if (!res.ok) throw new Error("Categories API error");
+      const data = await res.json();
+
+      const safeData = Array.isArray(data)
+        ? data.map((cat) => ({
+            ...cat,
+            subcategories: Array.isArray(cat.subcategories)
+              ? cat.subcategories.map((sub) => ({
+                  ...sub,
+                  children: Array.isArray(sub.children) ? sub.children : [],
+                }))
+              : [],
+          }))
+        : [];
+
+      setCategories(safeData);
+    } catch (err) {
+      console.error("Category load error:", err);
+      setCategories([]);
+    }
+  };
+
+  loadCategories();
+}, []);
+
 
   // Handle category click
 const handleCategoryClick = (cat) => {
@@ -192,11 +198,13 @@ const handleCategoryClick = (cat) => {
                 <span className="discount-badge">{p.discount}% off</span>
               )}
               <img
-                src={`${API_BASE_URL}/uploads/${
-                  p.images?.[0] || p.image
-                }`}
-                alt={p.name}
-                className="product-image"
+                   src={
+    p.images?.[0] || p.image
+      ? `${IMAGE_BASE_URL}/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
+      : "/placeholder.png"
+  }
+  alt={p.name}
+  className="product-image"
                 style={{
                   width: "100%",
                   maxWidth: 400,

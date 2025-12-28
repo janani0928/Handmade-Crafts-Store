@@ -33,7 +33,7 @@ const DeliveryAddress = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_BASE_URL}/api/address/list`)
+      .get(`${API_BASE_URL}/address/list`)
       .then((res) => setAddressList(res.data.addresses))
       .catch((err) => console.log(err));
   }, []);

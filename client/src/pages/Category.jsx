@@ -20,7 +20,7 @@ const AddCategory = () => {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/categories`, {
+      const res = await fetch(`${API_BASE_URL}/categories`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

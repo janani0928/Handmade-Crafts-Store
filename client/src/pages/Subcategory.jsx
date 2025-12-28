@@ -15,7 +15,7 @@ const AddSubcategory = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/categories`);
+      const res = await fetch(`${API_BASE_URL}/categories`);
       const data = await res.json();
       setCategories(data);
       // Optionally, reset category selection
@@ -34,7 +34,7 @@ const AddSubcategory = () => {
     setError("");
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/categories/add-subcategory`, {
+      const res = await fetch(`${API_BASE_URL}/categories/add-subcategory`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ categoryName, subcategoryName }),
@@ -42,7 +42,7 @@ const AddSubcategory = () => {
 
       if (!res.ok) throw new Error("Failed to add subcategory");
 
-      const updatedCategories = await fetch(`${API_BASE_URL}/api/categories`).then((res) => res.json());
+      const updatedCategories = await fetch(`${API_BASE_URL}/categories`).then((res) => res.json());
       setCategories(updatedCategories);
 
       // Update subcategory list for selected category

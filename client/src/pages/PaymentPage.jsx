@@ -99,7 +99,7 @@ if (!token) {
     setLoading(true);
     const paymentStatus = method === "COD" ? "Pending" : "Paid";
     try {
-      const res = await fetch(`${API_BASE_URL}/api/orders`, {
+      const res = await fetch(`${API_BASE_URL}/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

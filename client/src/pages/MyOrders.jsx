@@ -6,11 +6,12 @@ import API_BASE_URL from "../utils/api";
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
 
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${API_BASE_URL}/api/orders/my-orders`, {
+      const res = await axios.get(`${API_BASE_URL}/orders/my-orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(res.data);
@@ -99,7 +100,7 @@ const confirmCancel = async (orderId) => {
     const token = localStorage.getItem("token");
 
     await axios.put(
-      `${API_BASE_URL}/api/orders/cancel/${orderId}`,
+      `${API_BASE_URL}/orders/cancel/${orderId}`,
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -174,7 +175,7 @@ const confirmCancel = async (orderId) => {
               return (
                 <div key={idx} style={styles.orderItem}>
                   <img
-                    src={`${API_BASE_URL}/uploads/${item.images?.[0]}`}
+                    src={`${IMAGE_BASE_URL}/uploads/${item.images?.[0]}`}
                     alt={item.name}
                     style={styles.image}
                   />

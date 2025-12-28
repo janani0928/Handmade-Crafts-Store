@@ -8,6 +8,8 @@ const OrderNowPage = () => {
   const mainImage = state?.mainImage;
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
+  const IMAGE_BASE_URL = API_BASE_URL.replace("/api", "");
+
 
   if (!product) {
     return <h2 style={{ textAlign: "center" }}>No product selected.</h2>;
@@ -32,7 +34,7 @@ const OrderNowPage = () => {
     <div style={styles.container}>
       <div style={styles.imageSection}>
         <img
-          src={`${API_BASE_URL}/uploads/${mainImage || product.image}`}
+          src={`${IMAGE_BASE_URL}/uploads/${mainImage || product.image}`}
           alt={product.name}
           style={styles.mainImage}
         />
