@@ -20,7 +20,7 @@ const Homepage = () => {
 useEffect(() => {
   const loadProducts = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/products`);
+      const res = await fetch(`${API_BASE_URL}/api/products`);
       if (!res.ok) throw new Error("Products API error");
       const data = await res.json();
 
@@ -46,7 +46,7 @@ useEffect(() => {
 useEffect(() => {
   const loadCategories = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/categories`);
+      const res = await fetch(`${API_BASE_URL}/api/categories`);
       if (!res.ok) throw new Error("Categories API error");
       const data = await res.json();
 
