@@ -1,10 +1,6 @@
-const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  "https://handmade-crafts-store-1.onrender.com";
+const API_BASE_URL =
+  import.meta.env.PROD
+    ? "https://handmade-crafts-store-1.onrender.com/api"
+    : "http://localhost:5000/api";
 
-export const API_ENDPOINTS = {
-  products: `${BASE_URL}/api/products`,
-  categories: `${BASE_URL}/api/categories`,
-};
-
-export default BASE_URL;
+export default API_BASE_URL;
