@@ -19,8 +19,9 @@ const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://handmade-crafts-store-1.onrender.com"
+  "https://handmade-crafts-store.netlify.app"
 ];
+
 
 app.use(
   cors({
