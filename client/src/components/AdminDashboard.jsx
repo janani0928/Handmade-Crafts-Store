@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import API_BASE_URL from "../utils/api"
 
 const EMPTY_HIGHLIGHT = {
   heading: "",

@@ -2,14 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const RunServer= require("./Database/Connection");
-const productRoutes = require('./Routes/productRoutes');
-const categoryRoutes = require('./Routes/categoryRoutes');
+const productRoutes = require('./routes/productRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
 const path = require("path");
-const addressRoutes = require("./Routes/addressRoutes");
-const ordersRoutes = require("./Routes/ordersRoutes");
-const authRoutes = require("./Routes/RuthRoutes");
-const userRoutes = require("./Routes/userRoutes");
-const collectionRoutes = require("./Routes/collectionRoutes");
+const addressRoutes = require("./routes/addressRoutes");
+const ordersRoutes = require("./routes/ordersRoutes");
+const authRoutes = require("./routes/RuthRoutes");
+const userRoutes = require("./routes/userRoutes");
+const collectionRoutes = require("./routes/collectionRoutes");
 
 
 
@@ -45,9 +45,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use('/api/auth', authRoutes);
-// Mount homepage routes at /api
 app.use("/api/collection", collectionRoutes);
-
 app.use("/api/users", userRoutes);
 
 

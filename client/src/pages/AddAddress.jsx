@@ -33,7 +33,7 @@ const AddAddress = () => {
       if (isEdit) {
         // Update existing address
         res = await axios.put(
-          `${API_BASE_URL}/address/update/${editData._id}`,
+          `${API_BASE_URL}/api/address/update/${editData._id}`,
           form
         );
       } else {

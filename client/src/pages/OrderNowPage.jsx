@@ -33,7 +33,7 @@ const OrderNowPage = () => {
     <div style={styles.container}>
       <div style={styles.imageSection}>
         <img
-          src={`http://localhost:5000uploads/${mainImage || product.image}`}
+          src={`http://localhost:5000/uploads/${mainImage || product.image}`}
           alt={product.name}
           style={styles.mainImage}
         />
