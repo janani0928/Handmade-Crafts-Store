@@ -79,12 +79,16 @@ const Categoryicons = () => {
                   <span className="discount-badge">{p.discount}% off</span>
                 )}
 
-                <img
-                  src={`http://localhost:5000/uploads/${p.images?.[0] || p.image}`}
-                  alt={p.name}
-                  className="product-image"
-                  style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}
-                />
+                   <img
+                 src={
+                   p.images?.[0] || p.image
+                     ? `${API_BASE_URL.replace("/api", "")}/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
+                     : "/placeholder.png"
+                 }
+                 alt={p.name}
+                 className="product-image"
+                 style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}
+               />
 
                 <div className="product-info">
                   <h4 className="product-title">{p.name}</h4>
