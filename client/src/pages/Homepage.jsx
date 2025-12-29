@@ -3,12 +3,12 @@ import "./Homepage.css";
 import { useNavigate } from "react-router-dom";
 import API_BASE_URL from "../utils/api"
 
+
+
 const Homepage = () => {
-  const [email, setEmail] = useState("");
   const [categories, setCategories] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
 
   const navigate = useNavigate();
 
@@ -16,62 +16,55 @@ const Homepage = () => {
 
 
   /* ===================== FETCH PRODUCTS ===================== */
-// Fetch products
-useEffect(() => {
-  const loadProducts = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/products`);
-      if (!res.ok) throw new Error("Products API error");
-      const data = await res.json();
+  // Fetch products
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/products`);
+        if (!res.ok) throw new Error("Products API error");
+        const data = await res.json();
+        const products = Array.isArray(data)
+          ? data
+          : Array.isArray(data.products)
+          ? data.products
+          : [];
+        setAllProducts(products);
+        setFilteredProducts(products);
+      } catch (err) {
+        console.error("Failed to load products:", err);
+        setAllProducts([]);
+        setFilteredProducts([]);
+      }
+    };
+    loadProducts();
+  }, []);
 
-      const products = Array.isArray(data)
-        ? data
-        : Array.isArray(data.products)
-        ? data.products
-        : [];
-
-      setAllProducts(products);
-      setFilteredProducts(products);
-    } catch (err) {
-      console.error("Failed to load products:", err);
-      setAllProducts([]);
-      setFilteredProducts([]);
-    }
-  };
-
-  loadProducts();
-}, []);
-
-// Fetch categories
-useEffect(() => {
-  const loadCategories = async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/categories`);
-      if (!res.ok) throw new Error("Categories API error");
-      const data = await res.json();
-
-      const safeData = Array.isArray(data)
-        ? data.map((cat) => ({
-            ...cat,
-            subcategories: Array.isArray(cat.subcategories)
-              ? cat.subcategories.map((sub) => ({
-                  ...sub,
-                  children: Array.isArray(sub.children) ? sub.children : [],
-                }))
-              : [],
-          }))
-        : [];
-
-      setCategories(safeData);
-    } catch (err) {
-      console.error("Category load error:", err);
-      setCategories([]);
-    }
-  };
-
-  loadCategories();
-}, []);
-
+  // Fetch categories
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/categories`);
+        if (!res.ok) throw new Error("Categories API error");
+        const data = await res.json();
+        const safeData = Array.isArray(data)
+          ? data.map((cat) => ({
+              ...cat,
+              subcategories: Array.isArray(cat.subcategories)
+                ? cat.subcategories.map((sub) => ({
+                    ...sub,
+                    children: Array.isArray(sub.children) ? sub.children : [],
+                  }))
+                : [],
+            }))
+          : [];
+        setCategories(safeData);
+      } catch (err) {
+        console.error("Category load error:", err);
+        setCategories([]);
+      }
+    };
+    loadCategories();
+  }, []);
 
   // Handle category click
 const handleCategoryClick = (cat) => {
@@ -196,20 +189,17 @@ const handleCategoryClick = (cat) => {
               {p.discount > 0 && (
                 <span className="discount-badge">{p.discount}% off</span>
               )}
-              <img
-                   src={
+         <img
+  src={
     p.images?.[0] || p.image
-      ? `http://localhost:5000/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
+      ? `${API_BASE_URL.replace("/api", "")}/uploads/${encodeURIComponent(p.images?.[0] || p.image)}`
       : "/placeholder.png"
   }
   alt={p.name}
   className="product-image"
-                style={{
-                  width: "100%",
-                  maxWidth: 400,
-                  objectFit: "contain",
-                }}
-              />
+  style={{ width: "100%", maxWidth: 400, objectFit: "contain" }}
+/>
+
               <div className="product-info">
                 <h4 className="product-title">{p.name}</h4>
                 <div className="price-row">
