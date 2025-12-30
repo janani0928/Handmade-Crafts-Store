@@ -4,6 +4,8 @@ const Category = require("../Models/category");
 // Get All Categories
 // ----------------------
 exports.getCategories = async (req, res) => {
+    console.log("GET /api/categories called"); // debug log
+
   try {
     const categories = await Category.find();
     res.json(categories);

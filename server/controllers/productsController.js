@@ -75,6 +75,7 @@ exports.addProduct = async (req, res) => {
 // GET ALL PRODUCTS
 // ===============================
 exports.getProducts = async (req, res) => {
+  console.log("GET /api/products called"); // <- log
   try {
     const products = await Product.find()
       .populate("category", "name")
@@ -86,6 +87,7 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // ===============================
 // FILTER PRODUCTS
