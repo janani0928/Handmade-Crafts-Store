@@ -31,7 +31,7 @@ const AdminDashboard = () => {
     images: [],
     specifications: {},
     highlights: [{ ...EMPTY_HIGHLIGHT }],
-    sizeType:[],
+    sizeType: [],
     sizeChart: [{ size: "", chest: "", waist: "", length: "" }],
   });
 
@@ -172,9 +172,9 @@ const AdminDashboard = () => {
       rating: Number(formData.rating || 0),
       deliveryCharge: Number(formData.deliveryCharge || 0),
       discount: Number(formData.discount || 0),
-        sizeType: sizeType, // make sure sizeType is synced
+      sizeType: sizeType, // make sure sizeType is synced
 
-  sizeChart: sizeType === "free" ? [] : formData.sizeChart,
+      sizeChart: sizeType === "free" ? [] : formData.sizeChart,
 
     };
 
@@ -215,7 +215,7 @@ const AdminDashboard = () => {
         images: [],
         specifications: {},
         highlights: [{ ...EMPTY_HIGHLIGHT }],
-        sizeType:[],
+        sizeType: [],
         sizeChart: [{ size: "", chest: "", waist: "", length: "" }],
       });
       setImagePreviews([]);
@@ -302,41 +302,41 @@ const AdminDashboard = () => {
           <input style={styles.input} name="deliveryCharge" type="number" value={formData.deliveryCharge} onChange={handleChange} placeholder="Delivery Charge" />
           <input style={styles.input} name="discount" type="number" value={formData.discount} onChange={handleChange} placeholder="Discount (%)" />
 
-<select
-  style={styles.select}
-  value={selectedCategory}
-  onChange={(e) => {
-    const value = e.target.value;
-    setSelectedCategory(value);
-    setSelectedSubcategory("");
+          <select
+            style={styles.select}
+            value={selectedCategory}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSelectedCategory(value);
+              setSelectedSubcategory("");
 
-    setFormData(prev => ({
-      ...prev,
-      category: value,
-      subcategory: "",
-      childSubcategory: ""
-    }));
-  }}
-  required
->
+              setFormData(prev => ({
+                ...prev,
+                category: value,
+                subcategory: "",
+                childSubcategory: ""
+              }));
+            }}
+            required
+          >
             <option value="">Select Category</option>
             {categories.map((cat) => (<option key={cat._id} value={cat._id}>{cat.name}</option>))}
           </select>
-<select
-  style={styles.select}
-  value={selectedSubcategory}
-  onChange={(e) => {
-    const value = e.target.value;
-    setSelectedSubcategory(value);
+          <select
+            style={styles.select}
+            value={selectedSubcategory}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSelectedSubcategory(value);
 
-    setFormData(prev => ({
-      ...prev,
-      subcategory: value,
-      childSubcategory: ""
-    }));
-  }}
-  required
->
+              setFormData(prev => ({
+                ...prev,
+                subcategory: value,
+                childSubcategory: ""
+              }));
+            }}
+            required
+          >
             <option value="">Select Subcategory</option>
             {selectedCategoryObj?.subcategories?.map((sub) => (<option key={sub._id} value={sub._id}>{sub.name}</option>))}
           </select>
@@ -382,70 +382,70 @@ const AdminDashboard = () => {
 
           {/* SIZE TYPE */}
           <h3>Size Type</h3>
-<select
-  name="sizeType"
-  value={sizeType}
-  onChange={(e) => {
-    const value = e.target.value;
-    setSizeType(value);
+          <select
+            name="sizeType"
+            value={sizeType}
+            onChange={(e) => {
+              const value = e.target.value;
+              setSizeType(value);
 
-    setFormData((prev) => ({
-      ...prev,
-            sizeType: value, // ✅ add this
-      sizeChart:
-        value === "free"
-          ? []
-          : value === "clothing"
-          ? [{ size: "", chest: "", waist: "", length: "" }]
-          : [{ size: "" }], // footwear
-    }));
-  }}
->
-  <option value="free">Free Size</option>
-  <option value="footwear">Footwear</option>
-  <option value="clothing">Clothing</option>
-</select>
+              setFormData((prev) => ({
+                ...prev,
+                sizeType: value, // ✅ add this
+                sizeChart:
+                  value === "free"
+                    ? []
+                    : value === "clothing"
+                      ? [{ size: "", chest: "", waist: "", length: "" }]
+                      : [{ size: "" }], // footwear
+              }));
+            }}
+          >
+            <option value="free">Free Size</option>
+            <option value="footwear">Footwear</option>
+            <option value="clothing">Clothing</option>
+          </select>
 
 
 
-{/* SIZE CHART */}
-{sizeType === "clothing" || sizeType === "footwear" ? (
-  <>
-    <h3>Size Chart</h3>
-    {formData.sizeChart.map((row, i) => (
-      <div key={i} style={styles.sizeRow}>
-        <input
-          placeholder="Size (e.g., IND-6)"
-          value={row.size}
-          onChange={(e) => handleSizeChange(i, "size", e.target.value)}
-        />
-        {sizeType === "clothing" && (
-          <>
-            <input
-              placeholder="Chest"
-              value={row.chest}
-              onChange={(e) => handleSizeChange(i, "chest", e.target.value)}
-            />
-            <input
-              placeholder="Waist"
-              value={row.waist}
-              onChange={(e) => handleSizeChange(i, "waist", e.target.value)}
-            />
-            <input
-              placeholder="Length"
-              value={row.length}
-              onChange={(e) => handleSizeChange(i, "length", e.target.value)}
-            />
-          </>
-        )}
-        <button type="button" style={styles.subButton} onClick={() => removeSizeRow(i)}>X</button>
-      </div>
-    ))}
-    <button type="button" style={styles.button} onClick={addSizeRow}>+ Add Size</button>
-  </>
-) : (
-  sizeType === "free" && <p><b>Size:</b> Free Size</p>
-)}
+          {/* SIZE CHART */}
+          {sizeType === "clothing" || sizeType === "footwear" ? (
+            <>
+              <h3>Size Chart</h3>
+              {formData.sizeChart.map((row, i) => (
+                <div key={i} style={styles.sizeRow}>
+                  <input
+                    placeholder="Size (e.g., IND-6)"
+                    value={row.size}
+                    onChange={(e) => handleSizeChange(i, "size", e.target.value)}
+                  />
+                  {sizeType === "clothing" && (
+                    <>
+                      <input
+                        placeholder="Chest"
+                        value={row.chest}
+                        onChange={(e) => handleSizeChange(i, "chest", e.target.value)}
+                      />
+                      <input
+                        placeholder="Waist"
+                        value={row.waist}
+                        onChange={(e) => handleSizeChange(i, "waist", e.target.value)}
+                      />
+                      <input
+                        placeholder="Length"
+                        value={row.length}
+                        onChange={(e) => handleSizeChange(i, "length", e.target.value)}
+                      />
+                    </>
+                  )}
+                  <button type="button" style={styles.subButton} onClick={() => removeSizeRow(i)}>X</button>
+                </div>
+              ))}
+              <button type="button" style={styles.button} onClick={addSizeRow}>+ Add Size</button>
+            </>
+          ) : (
+            sizeType === "free" && <p><b>Size:</b> Free Size</p>
+          )}
 
           {/* IMAGE UPLOAD */}
           <input type="file" multiple onChange={handleFileChange} style={{ marginTop: 10 }} />

@@ -20,7 +20,7 @@ const Homepage = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const res = await fetch('https://handmade-crafts-store-1.onrender.com/api/products');
+        const res = await fetch(`${API_BASE_URL}/products`);
         if (!res.ok) throw new Error("Products API error");
         const data = await res.json();
         const products = Array.isArray(data)
@@ -43,7 +43,7 @@ const Homepage = () => {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const res = await fetch('https://handmade-crafts-store-1.onrender.com/api/categories');
+        const res = await fetch(`${API_BASE_URL}/categories`);
 
         if (!res.ok) throw new Error("Categories API error");
         const data = await res.json();
