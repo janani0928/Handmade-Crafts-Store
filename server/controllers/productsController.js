@@ -74,17 +74,17 @@ exports.addProduct = async (req, res) => {
 // ===============================
 // GET ALL PRODUCTS
 // ===============================
-exports.getProducts = async (req, res) => {
-  console.log("GET /api/products called"); // <- log
+ exports.getProducts = async (req, res) => {
+  console.log("GET /api/products called"); // Debug
   try {
     const products = await Product.find()
       .populate("category", "name")
       .populate("subcategory", "name")
       .populate("childSubcategory", "name");
-
     res.json(products);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Products API error" });
   }
 };
 
